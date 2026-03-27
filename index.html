@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorian Systems — EHR & ERP Implementation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #FF6B00;
+      --accent-rgb: 255, 107, 0;
+      --accent-light: #FF9A4D;
+      --bg: #0a0a0a;
+      --bg-card: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.06);
+      --text-primary: #f0f0f0;
+      --text-secondary: rgba(240,240,240,0.5);
+      --font-head: 'Space Grotesk', sans-serif;
+      --font-body: 'Archivo', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: auto; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--accent); color: #000; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #111; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--accent), var(--accent-light));
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover { box-shadow: 0 0 6px rgba(var(--accent-rgb),0.6); }
+
+    /* ─── SCROLL PROGRESS ─── */
+    #scrollProgress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      z-index: 10000;
+      transition: width 0.1s linear;
+    }
+
+    /* ─── STARSCAPE ─── */
+    #starscape {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* ─── LOADER ─── */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 24px;
+      transition: opacity 0.6s ease;
+    }
+    .loader-logo { width: 90px; opacity: 0.9; }
+    .loader-brand {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .loader-text {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .loader-bar-track {
+      width: 200px; height: 3px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loader-bar-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    /* ─── NAVBAR ─── */
+    #navbar {
+      position: fixed;
+      top: 12px; left: 0; right: 0;
+      z-index: 1000;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-inner {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 12px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #navbar.nav-scrolled .nav-inner {
+      max-width: 860px;
+      background: rgba(10,10,10,0.7);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 100px;
+      padding: 10px 28px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo img { width: 36px; height: auto; }
+    .nav-logo-text {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-cta {
+      background: var(--accent) !important;
+      color: #000 !important;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      font-size: 0.8rem !important;
+      box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.3);
+      transition: all 0.2s ease !important;
+    }
+    .nav-cta:hover {
+      box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.5) !important;
+      transform: translateY(-1px);
+    }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .hero-bg { position: absolute; inset: 0; pointer-events: none; }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+    }
+    .orb-1 {
+      width: 550px; height: 550px;
+      background: var(--accent);
+      opacity: 0.08;
+      top: -200px; right: -100px;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: #A886CD;
+      opacity: 0.06;
+      bottom: -150px; left: -80px;
+    }
+    .grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 0 32px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(var(--accent-rgb), 0.1);
+      border: 1px solid rgba(var(--accent-rgb), 0.2);
+      border-radius: 100px;
+      padding: 6px 16px;
+      margin-bottom: 28px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+    .hero-title .accent { color: var(--accent); }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.35);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.55);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      padding: 14px 32px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: fadeInUp 1s ease 1.5s both;
+    }
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 2px solid var(--accent);
+      border-bottom: 2px solid var(--accent);
+      transform: rotate(45deg);
+      animation: bounce 2s infinite;
+      opacity: 0.7;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(5px); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    /* ─── SCROLL ANIMATION ─── */
+    .scroll-animation {
+      height: 350vh;
+      position: relative;
+      z-index: 1;
+    }
+    .scroll-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+    #frameCanvas {
+      position: absolute;
+      top: 0; left: 0;
+    }
+    @media (max-width: 1024px) { .scroll-animation { height: 300vh; } }
+    @media (max-width: 768px) { .scroll-animation { height: 250vh; } }
+
+    /* ─── ANNOTATION CARDS ─── */
+    .annotation-card {
+      position: absolute;
+      bottom: 8vh;
+      left: 5vw;
+      max-width: 340px;
+      background: rgba(10, 10, 10, 0.7);
+      border: 1px solid rgba(var(--accent-rgb), 0.15);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 20px;
+      padding: 28px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .annotation-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .card-number {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+    .card-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+    .card-stat-number {
+      font-family: var(--font-head);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+      line-height: 1;
+    }
+    .card-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: block;
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+    @media (max-width: 768px) {
+      .annotation-card {
+        bottom: 1.5vh;
+        left: 2vw; right: 2vw;
+        max-width: none;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-radius: 14px;
+      }
+      .card-desc, .card-stat { display: none; }
+      .card-number { margin-bottom: 0; min-width: 28px; }
+    }
+
+    /* ─── SPECS ─── */
+    #specs {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(180deg, transparent, rgba(var(--accent-rgb), 0.03), transparent);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 100px 32px;
+      text-align: center;
+    }
+    .spec-item { display: flex; flex-direction: column; align-items: center; }
+    .spec-number {
+      font-family: var(--font-head);
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: block;
+      line-height: 1;
+      margin-bottom: 10px;
+      transition: text-shadow 0.3s ease;
+    }
+    .spec-number.counting {
+      text-shadow: 0 0 24px rgba(var(--accent-rgb), 0.6);
+      color: var(--accent);
+    }
+    .spec-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    @media (max-width: 768px) {
+      .specs-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 60px 24px; }
+      .spec-number { font-size: 2.4rem; }
+    }
+
+    /* ─── SECTION COMMONS ─── */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.65;
+    }
+    .section-header {
+      margin-bottom: 60px;
+    }
+
+    /* ─── FEATURES ─── */
+    #features {
+      position: relative;
+      z-index: 1;
+      padding: 100px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 32px;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(var(--accent-rgb), 0.2);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .feature-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    @media (max-width: 1024px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .features-grid { grid-template-columns: 1fr; } }
+
+    /* ─── CTA ─── */
+    #cta {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 120px 32px;
+      overflow: hidden;
+    }
+    .cta-orb {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: var(--accent);
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.06;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-content h2 {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .cta-content p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+    .cta-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .btn-large {
+      font-size: 1.05rem !important;
+      padding: 16px 44px !important;
+    }
+    .cta-contact {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      letter-spacing: 1px;
+    }
+    .cta-contact a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 60px 32px 40px;
+      text-align: center;
+    }
+    .footer-inner { max-width: 900px; margin: 0 auto; }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .footer-brand img { width: 32px; }
+    .footer-brand-name {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy {
+      color: rgba(255,255,255,0.2);
+      font-size: 0.78rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div id="scrollProgress"></div>
+
+  <!-- STARSCAPE -->
+  <canvas id="starscape"></canvas>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <img class="loader-logo" src="https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png" alt="Sorian Systems" onerror="this.style.display='none'">
+    <div class="loader-brand">Sorian Systems</div>
+    <div class="loader-text">Loading Experience</div>
+    <div class="loader-bar-track">
+      <div class="loader-bar-fill" id="loaderBar"></div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <img src="https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png" alt="Sorian Systems" onerror="this.style.display='none'">
+        <span class="nav-logo-text">Sorian Systems</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Services</a>
+        <a href="#specs">Results</a>
+        <a href="https://calendly.com/soriansystemsllc" target="_blank" class="nav-cta">Book a Call</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        EHR &amp; ERP Implementation
+      </div>
+      <h1 class="hero-title">
+        Streamline Your Systems.<br><span class="accent">Maximize Your Potential.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Expert EHR and ERP implementation for clinics and businesses ready to scale. Go live without the chaos — we handle the complexity so you can focus on care and growth.
+      </p>
+      <div class="hero-buttons">
+        <a href="https://calendly.com/soriansystemsllc" target="_blank" class="btn-primary">Book a Discovery Call</a>
+        <a href="#features" class="btn-secondary">View Our Services</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll to explore</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- SCROLL ANIMATION -->
+  <section class="scroll-animation">
+    <div class="scroll-sticky">
+      <canvas id="frameCanvas"></canvas>
+
+      <!-- ANNOTATION CARD 1 -->
+      <div class="annotation-card" data-show="0.08" data-hide="0.26">
+        <div class="card-number">01 — EHR Implementation</div>
+        <h3 class="card-title">Go Live Without the Chaos</h3>
+        <p class="card-desc">Full-cycle EHR deployment for 1–25 provider clinics. We manage setup, data migration, and go-live from day one.</p>
+        <div class="card-stat">
+          <span class="card-stat-number">20%</span>
+          <span class="card-stat-label">Average reduction in patient intake time</span>
+        </div>
+      </div>
+
+      <!-- ANNOTATION CARD 2 -->
+      <div class="annotation-card" data-show="0.30" data-hide="0.50">
+        <div class="card-number">02 — ERP Integration</div>
+        <h3 class="card-title">Connect Every Department</h3>
+        <p class="card-desc">End-to-end ERP implementation that unifies finance, HR, inventory, and operations into one seamless system.</p>
+        <div class="card-stat">
+          <span class="card-stat-number">360°</span>
+          <span class="card-stat-label">Full operational visibility from day one</span>
+        </div>
+      </div>
+
+      <!-- ANNOTATION CARD 3 -->
+      <div class="annotation-card" data-show="0.54" data-hide="0.73">
+        <div class="card-number">03 — Workflow Optimization</div>
+        <h3 class="card-title">Eliminate Friction at Every Step</h3>
+        <p class="card-desc">We map and redesign your workflows to remove bottlenecks before they cost you time, revenue, and staff morale.</p>
+        <div class="card-stat">
+          <span class="card-stat-number">Proven</span>
+          <span class="card-stat-label">Methodology across clinics &amp; enterprises</span>
+        </div>
+      </div>
+
+      <!-- ANNOTATION CARD 4 -->
+      <div class="annotation-card" data-show="0.77" data-hide="0.96">
+        <div class="card-number">04 — Post-Launch Support</div>
+        <h3 class="card-title">We Stay Long After Go-Live</h3>
+        <p class="card-desc">Ongoing support, training reinforcement, and system tuning so your team stays confident and your investment keeps paying off.</p>
+        <div class="card-stat">
+          <span class="card-stat-number">Always On</span>
+          <span class="card-stat-label">U.S.-based support you can actually reach</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section id="specs">
+    <div class="specs-grid">
+      <div class="spec-item" data-target="20" data-suffix="%">
+        <span class="spec-number">0%</span>
+        <span class="spec-label">Average reduction in patient intake time</span>
+      </div>
+      <div class="spec-item" data-target="6" data-suffix=" wks">
+        <span class="spec-number">0</span>
+        <span class="spec-label">Average time from kickoff to go-live</span>
+      </div>
+      <div class="spec-item" data-target="5" data-suffix="">
+        <span class="spec-number">0</span>
+        <span class="spec-label">Core service areas — EHR, ERP, workflows, training &amp; support</span>
+      </div>
+      <div class="spec-item" data-target="100" data-suffix="%">
+        <span class="spec-number">0%</span>
+        <span class="spec-label">U.S.-based implementation team</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="section-header">
+      <span class="section-label">What We Do</span>
+      <h2 class="section-title">Services Built for<br>Real-World Operations</h2>
+      <p class="section-subtitle">We don't just install software — we build systems that fit how your team actually works.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🏥</span>
+        <h3>EHR Implementation</h3>
+        <p>Full-cycle electronic health record deployment for 1–25 provider clinics. From vendor selection and data migration to staff training and go-live support.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⚙️</span>
+        <h3>ERP Software Implementation</h3>
+        <p>End-to-end ERP integration connecting finance, HR, procurement, and operations. We configure, migrate, and launch systems that scale with your business.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔄</span>
+        <h3>Workflow Optimization</h3>
+        <p>Map, analyze, and redesign your operational workflows to eliminate bottlenecks. We identify inefficiencies before they disrupt care or slow your business down.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎓</span>
+        <h3>Change Management &amp; Training</h3>
+        <p>Structured rollout plans and hands-on training that prepare your team for new systems — reducing resistance, errors, and downtime during transitions.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🛡️</span>
+        <h3>Post-Launch Support</h3>
+        <p>Ongoing monitoring, system tuning, and responsive support after go-live. We stay in your corner long after most vendors have moved on.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📋</span>
+        <h3>Practice Management Solutions</h3>
+        <p>Comprehensive practice management setup that reduces administrative burden, streamlines scheduling and billing, and keeps your clinic running at full efficiency.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-orb"></div>
+    <div class="cta-content">
+      <span class="section-label">Get Started</span>
+      <h2>Ready to Modernize<br>Your Operations?</h2>
+      <p>Whether you're implementing EHR for your clinic or ERP for your business, we'll guide you through every step — without the chaos.</p>
+      <div class="cta-actions">
+        <a href="https://calendly.com/soriansystemsllc" target="_blank" class="btn-primary btn-large">Book a Discovery Call</a>
+        <a href="https://soriansystems.com/services/" target="_blank" class="btn-secondary btn-large">View Our Services</a>
+      </div>
+      <div class="cta-contact">
+        Or call us directly: <a href="tel:18484370158">(848) 437-0158</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png" alt="Sorian Systems" onerror="this.style.display='none'">
+        <span class="footer-brand-name">Sorian Systems</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://soriansystems.com/about/" target="_blank">About</a>
+        <a href="https://soriansystems.com/services/" target="_blank">Services</a>
+        <a href="https://calendly.com/soriansystemsllc" target="_blank">Book a Call</a>
+        <a href="https://soriansystems.com/contact/" target="_blank">Contact</a>
+        <a href="https://www.linkedin.com/company/sorian-systems-llc" target="_blank">LinkedIn</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Sorian Systems LLC. All rights reserved. &nbsp;|&nbsp; Optimizing Systems, Maximizing Potential.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ─── STARSCAPE ───
+    (function() {
+      const canvas = document.getElementById('starscape');
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+
+      function resize() {
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.scale(dpr, dpr);
+      }
+
+      function initStars() {
+        stars = [];
+        for (let i = 0; i < 180; i++) {
+          stars.push({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            radius: Math.random() * 1.2 + 0.3,
+            baseOpacity: Math.random() * 0.6 + 0.2,
+            driftX: (Math.random() - 0.5) * 0.03,
+            driftY: (Math.random() - 0.5) * 0.015,
+            twinkleSpeed: Math.random() * 0.0008 + 0.0003,
+            twinklePhase: Math.random() * Math.PI * 2,
+          });
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        stars.forEach(s => {
+          s.x += s.driftX;
+          s.y += s.driftY;
+          if (s.x < 0) s.x = window.innerWidth;
+          if (s.x > window.innerWidth) s.x = 0;
+          if (s.y < 0) s.y = window.innerHeight;
+          if (s.y > window.innerHeight) s.y = 0;
+          const twinkle = Math.sin(Date.now() * s.twinkleSpeed + s.twinklePhase);
+          const opacity = Math.max(0, s.baseOpacity + twinkle * 0.3);
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(animate);
+      }
+
+      resize();
+      initStars();
+      animate();
+      window.addEventListener('resize', () => { resize(); initStars(); });
+    })();
+
+    // ─── SCROLL PROGRESS ───
+    const scrollProgress = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      scrollProgress.style.width = pct + '%';
+    }, { passive: true });
+
+    // ─── NAVBAR ───
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('nav-scrolled', window.scrollY > 80);
+    }, { passive: true });
+
+    // ─── FRAME SEQUENCE ───
+    const FRAME_COUNT = 106;
+    const canvas = document.getElementById('frameCanvas');
+    const ctx2 = canvas.getContext('2d');
+    const frames = [];
+    let loadedFrames = 0;
+    let currentFrame = -1;
+    let ticking = false;
+    const loaderBar = document.getElementById('loaderBar');
+    const loader = document.getElementById('loader');
+
+    function resizeCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      if (currentFrame >= 0) drawFrame(currentFrame);
+    }
+
+    function drawFrame(index) {
+      const img = frames[index];
+      if (!img || !img.complete) return;
+      const dpr = window.devicePixelRatio || 1;
+      const cw = canvas.width;
+      const ch = canvas.height;
+      ctx2.clearRect(0, 0, cw, ch);
+
+      const imgRatio = img.naturalWidth / img.naturalHeight;
+      const canvasRatio = cw / ch;
+      let drawW, drawH, drawX, drawY;
+
+      if (window.innerWidth > 768) {
+        if (canvasRatio > imgRatio) {
+          drawW = cw; drawH = cw / imgRatio;
+        } else {
+          drawH = ch; drawW = ch * imgRatio;
+        }
+      } else {
+        const zoom = 1.15;
+        if (canvasRatio > imgRatio) {
+          drawH = ch * zoom; drawW = drawH * imgRatio;
+        } else {
+          drawW = cw * zoom; drawH = drawW / imgRatio;
+        }
+      }
+      drawX = (cw - drawW) / 2;
+      drawY = (ch - drawH) / 2;
+      ctx2.drawImage(img, drawX, drawY, drawW, drawH);
+    }
+
+    function onAllFramesLoaded() {
+      loader.style.opacity = '0';
+      setTimeout(() => { loader.style.display = 'none'; }, 600);
+      drawFrame(0);
+      currentFrame = 0;
+    }
+
+    for (let i = 1; i <= FRAME_COUNT; i++) {
+      const img = new Image();
+      const num = String(i).padStart(4, '0');
+      img.src = `frames/frame_${num}.jpg`;
+      img.onload = () => {
+        loadedFrames++;
+        loaderBar.style.width = (loadedFrames / FRAME_COUNT * 100) + '%';
+        if (loadedFrames === FRAME_COUNT) onAllFramesLoaded();
+      };
+      img.onerror = () => {
+        loadedFrames++;
+        if (loadedFrames === FRAME_COUNT) onAllFramesLoaded();
+      };
+      frames.push(img);
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // ─── ANNOTATION CARDS + SNAP STOP ───
+    const HOLD_DURATION = 550;
+    let isSnapping = false;
+    const cards = document.querySelectorAll('.annotation-card');
+    const SNAP_ZONES = Array.from(cards).map(card => ({
+      show: parseFloat(card.dataset.show),
+      hide: parseFloat(card.dataset.hide),
+      snapped: false
+    }));
+
+    function updateCards(progress) {
+      cards.forEach((card, i) => {
+        const zone = SNAP_ZONES[i];
+        const visible = progress >= zone.show && progress <= zone.hide;
+        card.classList.toggle('visible', visible);
+        if (visible && !zone.snapped && !isSnapping) {
+          zone.snapped = true;
+          isSnapping = true;
+          document.body.style.overflow = 'hidden';
+          setTimeout(() => {
+            document.body.style.overflow = '';
+            isSnapping = false;
+          }, HOLD_DURATION);
+        }
+        if (!visible) zone.snapped = false;
+      });
+    }
+
+    // ─── SCROLL → FRAME MAPPING ───
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const section = document.querySelector('.scroll-animation');
+          const rect = section.getBoundingClientRect();
+          const scrollable = section.offsetHeight - window.innerHeight;
+          const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+          const frameIndex = Math.min(FRAME_COUNT - 1, Math.floor(progress * FRAME_COUNT));
+          if (frameIndex !== currentFrame) {
+            currentFrame = frameIndex;
+            drawFrame(frameIndex);
+          }
+          updateCards(progress);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // ─── SPECS COUNT-UP ───
+    function easeOutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
+
+    function countUp(el, target, suffix, duration) {
+      const start = performance.now();
+      el.classList.add('counting');
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeOutExpo(progress);
+        const current = eased * target;
+        const display = target % 1 === 0 ? Math.floor(current) : current.toFixed(1);
+        el.textContent = display + suffix;
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          el.textContent = target + suffix;
+          el.classList.remove('counting');
+        }
+      }
+      requestAnimationFrame(update);
+    }
+
+    const specObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const items = entry.target.querySelectorAll('.spec-item');
+          items.forEach((item, i) => {
+            setTimeout(() => {
+              const numEl = item.querySelector('.spec-number');
+              const target = parseFloat(item.dataset.target);
+              const suffix = item.dataset.suffix || '';
+              countUp(numEl, target, suffix, 2000);
+            }, i * 220);
+          });
+          specObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    specObserver.observe(document.getElementById('specs'));
+  </script>
+</body>
+</html>
