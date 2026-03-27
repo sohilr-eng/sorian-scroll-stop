@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — Sorian Systems | EHR, ERP & Workflow Solutions</title>
+  <meta name="description" content="Sorian Systems offers expert EHR implementation, ERP integration, workflow optimization, change management, post-launch support, and practice management for clinics and businesses.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://sorian-scroll-stop.vercel.app/services.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Services — Sorian Systems | EHR, ERP & Workflow Solutions">
+  <meta property="og:description" content="Expert EHR and ERP implementation, workflow optimization, and post-launch support for clinics and businesses ready to scale.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sorian-scroll-stop.vercel.app/services.html">
+  <meta property="og:site_name" content="Sorian Systems">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Services — Sorian Systems">
+  <meta name="twitter:description" content="Expert EHR, ERP, and workflow solutions for clinics and businesses.">
+
+  <!-- JSON-LD Service Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Sorian Systems LLC",
+    "url": "https://sorian-scroll-stop.vercel.app/services.html",
+    "telephone": "+1-848-437-0158",
+    "email": "info@soriansystems.com",
+    "description": "Expert EHR and ERP implementation services for clinics and businesses.",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Implementation Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "EHR Implementation",
+            "description": "Full-cycle electronic health record deployment for 1–25 provider clinics."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "ERP Software Implementation",
+            "description": "End-to-end ERP integration connecting finance, HR, procurement, and operations."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Workflow Optimization",
+            "description": "Map, analyze, and redesign operational workflows to eliminate bottlenecks."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Change Management & Training",
+            "description": "Structured rollout plans and hands-on training for new system adoption."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Post-Launch Support",
+            "description": "Ongoing monitoring, system tuning, and responsive support after go-live."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Practice Management Solutions",
+            "description": "Comprehensive practice management setup for scheduling, billing, and clinic operations."
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #FF6B00;
+      --accent-rgb: 255, 107, 0;
+      --accent-light: #FF9A4D;
+      --bg: #0a0a0a;
+      --bg-card: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.06);
+      --text-primary: #f0f0f0;
+      --text-secondary: rgba(240,240,240,0.5);
+      --font-head: 'Space Grotesk', sans-serif;
+      --font-body: 'Archivo', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--accent); color: #000; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #111; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--accent), var(--accent-light));
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover { box-shadow: 0 0 6px rgba(var(--accent-rgb),0.6); }
+
+    #scrollProgress {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      z-index: 10000;
+      transition: width 0.1s linear;
+    }
+
+    #starscape {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none; opacity: 0.6;
+    }
+
+    /* ─── NAVBAR ─── */
+    #navbar {
+      position: fixed; top: 12px; left: 0; right: 0;
+      z-index: 1000;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-inner {
+      max-width: 100%; margin: 0 auto; padding: 12px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #navbar.nav-scrolled .nav-inner {
+      max-width: 920px;
+      background: rgba(10,10,10,0.7);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: 100px; padding: 10px 28px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 36px; height: auto; }
+    .nav-logo-text {
+      font-family: var(--font-head); font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--text-primary);
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a {
+      font-family: var(--font-body); font-size: 0.875rem;
+      color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a.active { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent) !important; color: #000 !important;
+      padding: 8px 20px; border-radius: 8px;
+      font-weight: 600 !important; font-size: 0.8rem !important;
+      box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.3);
+      transition: all 0.2s ease !important;
+    }
+    .nav-cta:hover {
+      box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.5) !important;
+      transform: translateY(-1px);
+    }
+
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; z-index: 1001;
+      background: none; border: none;
+    }
+    .nav-hamburger span {
+      width: 24px; height: 2px; background: var(--text-primary);
+      border-radius: 2px; transition: all 0.3s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .mobile-nav {
+      display: none; position: fixed; inset: 0;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      z-index: 999; flex-direction: column;
+      align-items: center; justify-content: center; gap: 32px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: var(--font-head); font-size: 1.5rem; font-weight: 600;
+      color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease;
+    }
+    .mobile-nav a:hover, .mobile-nav a.active { color: var(--accent); }
+    .mobile-nav .nav-cta { font-size: 1rem !important; padding: 14px 36px; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      position: relative; min-height: 55vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; z-index: 1; padding-top: 80px;
+    }
+    .hero-bg { position: absolute; inset: 0; pointer-events: none; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(90px); }
+    .orb-1 { width: 550px; height: 550px; background: var(--accent); opacity: 0.08; top: -200px; right: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: #A886CD; opacity: 0.06; bottom: -150px; left: -80px; }
+    .grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 0 32px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(var(--accent-rgb), 0.1); border: 1px solid rgba(var(--accent-rgb), 0.2);
+      border-radius: 100px; padding: 6px 16px; margin-bottom: 28px;
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--accent);
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; background: var(--accent);
+      border-radius: 50%; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero-title {
+      font-family: var(--font-head); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; color: var(--text-primary);
+    }
+    .hero-title .accent { color: var(--accent); }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.15rem); color: var(--text-secondary);
+      line-height: 1.6; max-width: 600px; margin: 0 auto;
+    }
+
+    /* ─── COMMONS ─── */
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: block;
+    }
+    .section-title {
+      font-family: var(--font-head); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700;
+      line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem; color: var(--text-secondary); max-width: 560px; line-height: 1.65;
+    }
+    .section-header { margin-bottom: 60px; }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── SERVICES DETAIL ─── */
+    #services-detail {
+      position: relative; z-index: 1;
+      padding: 100px 32px; max-width: 1200px; margin: 0 auto;
+    }
+    .service-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 80px;
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .service-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .service-row.reverse .service-info { order: 2; }
+    .service-row.reverse .service-visual { order: 1; }
+    .service-info { }
+    .service-number {
+      font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent);
+      letter-spacing: 2px; margin-bottom: 12px; display: block;
+    }
+    .service-info h3 {
+      font-family: var(--font-head); font-size: 1.5rem; font-weight: 700;
+      margin-bottom: 16px; color: var(--text-primary);
+    }
+    .service-info p {
+      font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px;
+    }
+    .service-benefits {
+      list-style: none; display: flex; flex-direction: column; gap: 10px;
+    }
+    .service-benefits li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .service-benefits li::before {
+      content: '→';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .service-visual {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 40px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 280px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .service-visual:hover {
+      transform: translateY(-5px);
+      border-color: rgba(var(--accent-rgb), 0.2);
+    }
+    .service-visual-icon {
+      font-size: 3.5rem; margin-bottom: 20px;
+    }
+    .service-visual-stat {
+      font-family: var(--font-head); font-size: 2.4rem; font-weight: 700;
+      color: var(--accent); line-height: 1;
+    }
+    .service-visual-label {
+      font-size: 0.8rem; color: var(--text-secondary);
+      margin-top: 8px; text-align: center;
+    }
+    @media (max-width: 768px) {
+      .service-row { grid-template-columns: 1fr; gap: 32px; }
+      .service-row.reverse .service-info { order: 1; }
+      .service-row.reverse .service-visual { order: 2; }
+    }
+
+    /* ─── PROCESS ─── */
+    #process {
+      position: relative; z-index: 1;
+      background: linear-gradient(180deg, transparent, rgba(var(--accent-rgb), 0.03), transparent);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 100px 32px;
+    }
+    .process-inner { max-width: 900px; margin: 0 auto; }
+    .process-timeline { margin-top: 60px; position: relative; }
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      left: 24px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), rgba(var(--accent-rgb), 0.1));
+    }
+    .process-step {
+      display: flex; gap: 32px; margin-bottom: 48px; position: relative;
+    }
+    .process-step:last-child { margin-bottom: 0; }
+    .process-dot {
+      width: 50px; height: 50px; flex-shrink: 0;
+      background: rgba(var(--accent-rgb), 0.1);
+      border: 2px solid rgba(var(--accent-rgb), 0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+      color: var(--accent); z-index: 1;
+    }
+    .process-content h4 {
+      font-family: var(--font-head); font-size: 1.15rem; font-weight: 700;
+      margin-bottom: 8px; color: var(--text-primary);
+    }
+    .process-content p {
+      font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65;
+    }
+    @media (max-width: 640px) {
+      .process-step { gap: 20px; }
+      .process-dot { width: 40px; height: 40px; font-size: 0.65rem; }
+      .process-timeline::before { left: 19px; }
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials {
+      position: relative; z-index: 1;
+      padding: 100px 32px; max-width: 1200px; margin: 0 auto;
+    }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 32px;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex; flex-direction: column;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(var(--accent-rgb), 0.2);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+    .testimonial-stars {
+      color: var(--accent); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 16px;
+    }
+    .testimonial-quote {
+      font-size: 0.925rem; color: var(--text-secondary);
+      line-height: 1.7; flex: 1; margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex; align-items: center; gap: 12px;
+      padding-top: 20px; border-top: 1px solid var(--border);
+    }
+    .testimonial-avatar {
+      width: 44px; height: 44px;
+      background: rgba(var(--accent-rgb), 0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-size: 0.9rem; font-weight: 700;
+      color: var(--accent);
+    }
+    .testimonial-name {
+      font-family: var(--font-head); font-size: 0.9rem; font-weight: 600;
+      color: var(--text-primary); display: block;
+    }
+    .testimonial-role {
+      font-size: 0.78rem; color: var(--text-secondary); display: block; margin-top: 2px;
+    }
+    @media (max-width: 1024px) { .testimonials-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+    /* ─── CTA ─── */
+    #cta {
+      position: relative; z-index: 1; text-align: center;
+      padding: 120px 32px; overflow: hidden;
+    }
+    .cta-orb {
+      position: absolute; width: 600px; height: 600px;
+      background: var(--accent); border-radius: 50%; filter: blur(120px);
+      opacity: 0.06; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-content h2 {
+      font-family: var(--font-head); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+      letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .cta-content p {
+      font-size: 1.05rem; color: var(--text-secondary);
+      max-width: 520px; margin: 0 auto 40px; line-height: 1.65;
+    }
+    .cta-actions {
+      display: flex; gap: 16px; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 28px;
+    }
+    .btn-primary {
+      background: var(--accent); color: #000; padding: 14px 32px;
+      border-radius: 12px; font-family: var(--font-head);
+      font-weight: 600; font-size: 0.95rem; text-decoration: none;
+      box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.35);
+      transition: all 0.3s ease; display: inline-block;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.55);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--text-primary);
+      padding: 14px 32px; border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px; font-family: var(--font-head); font-size: 0.95rem;
+      text-decoration: none; transition: all 0.3s ease; display: inline-block;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.3); transform: translateY(-2px);
+    }
+    .btn-large { font-size: 1.05rem !important; padding: 16px 44px !important; }
+    .cta-contact {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--text-secondary); letter-spacing: 1px;
+    }
+    .cta-contact a { color: var(--accent); text-decoration: none; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 60px 32px 40px; text-align: center;
+    }
+    .footer-inner { max-width: 900px; margin: 0 auto; }
+    .footer-brand {
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; margin-bottom: 24px;
+    }
+    .footer-brand img { width: 32px; }
+    .footer-brand-name {
+      font-family: var(--font-head); font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    .footer-links {
+      display: flex; justify-content: center; gap: 28px;
+      margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-secondary); text-decoration: none;
+      font-size: 0.875rem; transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { color: rgba(255,255,255,0.2); font-size: 0.78rem; }
+  </style>
+</head>
+<body>
+
+  <div id="scrollProgress"></div>
+  <canvas id="starscape"></canvas>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png" alt="Sorian Systems" onerror="this.style.display='none'">
+        <span class="nav-logo-text">Sorian Systems</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html" class="active">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://calendly.com/soriansystemsllc" target="_blank" class="nav-cta">Book a Call</a>
+      </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html" class="active">Services</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://calendly.com/soriansystemsllc" target="_blank" class="nav-cta">Book a Call</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        What We Do
+      </div>
+      <h1 class="hero-title">
+        Services Built for<br><span class="accent">Real-World Operations</span>
+      </h1>
+      <p class="hero-subtitle">
+        We don't just install software — we build systems that fit how your team actually works. From EHR deployment to ERP integration, every engagement is tailored to your operations.
+      </p>
+    </div>
+  </section>
+
+  <!-- SERVICES DETAIL -->
+  <section id="services-detail">
+    <div class="section-header reveal">
+      <span class="section-label">Our Services</span>
+      <h2 class="section-title">End-to-End Implementation<br>Across Six Core Areas</h2>
+      <p class="section-subtitle">Each service is designed to eliminate friction, accelerate adoption, and maximize the ROI of your technology investment.</p>
+    </div>
+
+    <!-- Service 1 -->
+    <div class="service-row reveal">
+      <div class="service-info">
+        <span class="service-number">01 — EHR Implementation</span>
+        <h3>Go Live Without the Chaos</h3>
+        <p>Full-cycle electronic health record deployment for 1–25 provider clinics. We manage vendor selection, system configuration, data migration, staff training, and go-live support from start to finish.</p>
+        <ul class="service-benefits">
+          <li>Vendor-agnostic — we work with your preferred EHR platform</li>
+          <li>Complete data migration with validation checkpoints</li>
+          <li>Customized clinical workflows for your specialty</li>
+          <li>Hands-on training for every staff role</li>
+        </ul>
+      </div>
+      <div class="service-visual">
+        <div class="service-visual-icon">🏥</div>
+        <div class="service-visual-stat">20%</div>
+        <div class="service-visual-label">Average reduction in patient intake time</div>
+      </div>
+    </div>
+
+    <!-- Service 2 -->
+    <div class="service-row reverse reveal">
+      <div class="service-info">
+        <span class="service-number">02 — ERP Software Implementation</span>
+        <h3>Connect Every Department</h3>
+        <p>End-to-end ERP integration connecting finance, HR, procurement, inventory, and operations into one unified system. We configure, migrate, and launch platforms that scale with your business.</p>
+        <ul class="service-benefits">
+          <li>Unified platform for all back-office operations</li>
+          <li>Process mapping before configuration begins</li>
+          <li>Phased rollout to minimize disruption</li>
+          <li>Real-time reporting and dashboards from day one</li>
+        </ul>
+      </div>
+      <div class="service-visual">
+        <div class="service-visual-icon">⚙️</div>
+        <div class="service-visual-stat">360°</div>
+        <div class="service-visual-label">Full operational visibility from launch</div>
+      </div>
+    </div>
+
+    <!-- Service 3 -->
+    <div class="service-row reveal">
+      <div class="service-info">
+        <span class="service-number">03 — Workflow Optimization</span>
+        <h3>Eliminate Friction at Every Step</h3>
+        <p>We map, analyze, and redesign your operational workflows to remove bottlenecks before they cost you time, revenue, and staff morale. Technology is only as good as the processes it supports.</p>
+        <ul class="service-benefits">
+          <li>Current-state workflow mapping and gap analysis</li>
+          <li>Process redesign aligned to your technology</li>
+          <li>Measurable KPIs tied to efficiency gains</li>
+          <li>Continuous improvement recommendations</li>
+        </ul>
+      </div>
+      <div class="service-visual">
+        <div class="service-visual-icon">🔄</div>
+        <div class="service-visual-stat">Proven</div>
+        <div class="service-visual-label">Methodology across clinics & enterprises</div>
+      </div>
+    </div>
+
+    <!-- Service 4 -->
+    <div class="service-row reverse reveal">
+      <div class="service-info">
+        <span class="service-number">04 — Change Management & Training</span>
+        <h3>Your Team, Fully Prepared</h3>
+        <p>Structured rollout plans and hands-on training that prepare your entire team for new systems — reducing resistance, errors, and downtime during transitions.</p>
+        <ul class="service-benefits">
+          <li>Role-based training curriculum</li>
+          <li>Super-user identification and empowerment</li>
+          <li>Communication plans for organizational buy-in</li>
+          <li>Post-training competency validation</li>
+        </ul>
+      </div>
+      <div class="service-visual">
+        <div class="service-visual-icon">🎓</div>
+        <div class="service-visual-stat">100%</div>
+        <div class="service-visual-label">Staff readiness at go-live</div>
+      </div>
+    </div>
+
+    <!-- Service 5 -->
+    <div class="service-row reveal">
+      <div class="service-info">
+        <span class="service-number">05 — Post-Launch Support</span>
+        <h3>We Stay Long After Go-Live</h3>
+        <p>Ongoing monitoring, system tuning, and responsive support after go-live. We stay in your corner long after most vendors have moved on — because real adoption happens after launch.</p>
+        <ul class="service-benefits">
+          <li>Dedicated U.S.-based support team</li>
+          <li>System performance monitoring and optimization</li>
+          <li>Refresher training and workflow adjustments</li>
+          <li>Issue escalation and resolution tracking</li>
+        </ul>
+      </div>
+      <div class="service-visual">
+        <div class="service-visual-icon">🛡️</div>
+        <div class="service-visual-stat">Always On</div>
+        <div class="service-visual-label">U.S.-based support you can actually reach</div>
+      </div>
+    </div>
+
+    <!-- Service 6 -->
+    <div class="service-row reverse reveal">
+      <div class="service-info">
+        <span class="service-number">06 — Practice Management Solutions</span>
+        <h3>Run Your Clinic at Full Efficiency</h3>
+        <p>Comprehensive practice management setup that reduces administrative burden, streamlines scheduling and billing, and keeps your clinic running at peak performance every day.</p>
+        <ul class="service-benefits">
+          <li>Scheduling and appointment optimization</li>
+          <li>Billing and claims management setup</li>
+          <li>Patient communication workflow design</li>
+          <li>Reporting dashboards for practice health</li>
+        </ul>
+      </div>
+      <div class="service-visual">
+        <div class="service-visual-icon">📋</div>
+        <div class="service-visual-stat">6 wks</div>
+        <div class="service-visual-label">Average time from kickoff to go-live</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="process-inner">
+      <div class="section-header reveal" style="text-align: center;">
+        <span class="section-label">How We Work</span>
+        <h2 class="section-title">A Proven 5-Step<br>Implementation Process</h2>
+        <p class="section-subtitle" style="margin: 0 auto;">
+          Every engagement follows our structured methodology — designed to get you live quickly, without cutting corners.
+        </p>
+      </div>
+
+      <div class="process-timeline">
+        <div class="process-step reveal">
+          <div class="process-dot">01</div>
+          <div class="process-content">
+            <h4>Discovery & Assessment</h4>
+            <p>We start by deeply understanding your current operations, pain points, and goals. This includes stakeholder interviews, workflow mapping, and technology assessment.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="process-dot">02</div>
+          <div class="process-content">
+            <h4>Planning & Design</h4>
+            <p>We build a detailed implementation roadmap — including system configuration, data migration strategy, training plans, and go-live timelines with clear milestones.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="process-dot">03</div>
+          <div class="process-content">
+            <h4>Configuration & Build</h4>
+            <p>Your system is configured to match your workflows — not the other way around. We handle all setup, integration, and testing before anything touches production.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="process-dot">04</div>
+          <div class="process-content">
+            <h4>Training & Go-Live</h4>
+            <p>Role-based training ensures every team member is confident. We're on-site (or on-call) during go-live to handle anything that comes up in real time.</p>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="process-dot">05</div>
+          <div class="process-content">
+            <h4>Optimization & Support</h4>
+            <p>Post-launch, we monitor performance, gather feedback, and tune your system. We stay embedded until your team is fully self-sufficient — and remain available after that.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="section-header reveal" style="text-align: center;">
+      <span class="section-label">Client Feedback</span>
+      <h2 class="section-title">What Our Clients Say</h2>
+      <p class="section-subtitle" style="margin: 0 auto;">
+        Real feedback from the clinics and businesses we've helped modernize their operations.
+      </p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">
+          "Sorian Systems made our EHR transition seamless. Their team was hands-on from day one, and our staff was fully trained before go-live. We saw a noticeable improvement in patient intake time within the first month."
+        </p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">DR</div>
+          <div>
+            <span class="testimonial-name">Dr. R. Thompson</span>
+            <span class="testimonial-role">Medical Director, Multi-Specialty Clinic</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">
+          "We'd tried implementing our ERP twice before with other consultants. Sorian was the first team that actually mapped our workflows before touching the system. Everything just worked from the start."
+        </p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">MJ</div>
+          <div>
+            <span class="testimonial-name">M. Johnson</span>
+            <span class="testimonial-role">COO, Mid-Size Enterprise</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-quote">
+          "What impressed us most was the post-launch support. Most vendors disappear after go-live — Sorian stayed, trained our new hires, and kept optimizing the system months after launch."
+        </p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SK</div>
+          <div>
+            <span class="testimonial-name">S. Kumar</span>
+            <span class="testimonial-role">Practice Manager, Primary Care Group</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-orb"></div>
+    <div class="cta-content reveal">
+      <span class="section-label">Get Started</span>
+      <h2>Ready to Modernize<br>Your Operations?</h2>
+      <p>Whether you're implementing EHR for your clinic or ERP for your business, we'll guide you through every step — without the chaos.</p>
+      <div class="cta-actions">
+        <a href="https://calendly.com/soriansystemsllc" target="_blank" class="btn-primary btn-large">Book a Discovery Call</a>
+        <a href="contact.html" class="btn-secondary btn-large">Contact Us</a>
+      </div>
+      <div class="cta-contact">
+        Or call us directly: <a href="tel:18484370158">(848) 437-0158</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png" alt="Sorian Systems" onerror="this.style.display='none'">
+        <span class="footer-brand-name">Sorian Systems</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://calendly.com/soriansystemsllc" target="_blank">Book a Call</a>
+        <a href="https://www.linkedin.com/company/sorian-systems-llc" target="_blank">LinkedIn</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Sorian Systems LLC. All rights reserved. &nbsp;|&nbsp; Optimizing Systems, Maximizing Potential.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ─── STARSCAPE ───
+    (function() {
+      const canvas = document.getElementById('starscape');
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+      function resize() {
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.scale(dpr, dpr);
+      }
+      function initStars() {
+        stars = [];
+        for (let i = 0; i < 180; i++) {
+          stars.push({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            radius: Math.random() * 1.2 + 0.3,
+            baseOpacity: Math.random() * 0.6 + 0.2,
+            driftX: (Math.random() - 0.5) * 0.03,
+            driftY: (Math.random() - 0.5) * 0.015,
+            twinkleSpeed: Math.random() * 0.0008 + 0.0003,
+            twinklePhase: Math.random() * Math.PI * 2,
+          });
+        }
+      }
+      function animate() {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        stars.forEach(s => {
+          s.x += s.driftX; s.y += s.driftY;
+          if (s.x < 0) s.x = window.innerWidth;
+          if (s.x > window.innerWidth) s.x = 0;
+          if (s.y < 0) s.y = window.innerHeight;
+          if (s.y > window.innerHeight) s.y = 0;
+          const twinkle = Math.sin(Date.now() * s.twinkleSpeed + s.twinklePhase);
+          const opacity = Math.max(0, s.baseOpacity + twinkle * 0.3);
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(animate);
+      }
+      resize(); initStars(); animate();
+      window.addEventListener('resize', () => { resize(); initStars(); });
+    })();
+
+    // ─── SCROLL PROGRESS ───
+    window.addEventListener('scroll', () => {
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      document.getElementById('scrollProgress').style.width = pct + '%';
+    }, { passive: true });
+
+    // ─── NAVBAR ───
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('nav-scrolled', window.scrollY > 80);
+    }, { passive: true });
+
+    // ─── MOBILE NAV ───
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+
+    // ─── SCROLL REVEAL ───
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>
