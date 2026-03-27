@@ -447,7 +447,7 @@
 
     /* ─── SCROLL ANIMATION ─── */
     .scroll-animation {
-      height: 350vh;
+      height: 220vh;
       position: relative;
       z-index: 1;
     }
@@ -458,12 +458,32 @@
       width: 100%;
       overflow: hidden;
     }
+    /* Gradient masks — fade top 12% and bottom 28% to bg color,
+       creating a cinematic crop that hides edge artifacts */
+    .scroll-sticky::before,
+    .scroll-sticky::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .scroll-sticky::before {
+      top: 0;
+      height: 12%;
+      background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+    }
+    .scroll-sticky::after {
+      bottom: 0;
+      height: 28%;
+      background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+    }
     #frameCanvas {
       position: absolute;
       top: 0; left: 0;
     }
-    @media (max-width: 1024px) { .scroll-animation { height: 300vh; } }
-    @media (max-width: 768px) { .scroll-animation { height: 250vh; } }
+    @media (max-width: 1024px) { .scroll-animation { height: 190vh; } }
+    @media (max-width: 768px) { .scroll-animation { height: 160vh; } }
 
     /* ─── ANNOTATION CARDS ─── */
     .annotation-card {
@@ -1108,7 +1128,9 @@
         }
       }
       drawX = (cw - drawW) / 2;
-      drawY = (ch - drawH) / 2;
+      // Shift up by 8% of canvas height so the subject sits in the
+      // visible zone (above the 28% bottom gradient mask)
+      drawY = (ch - drawH) / 2 - ch * 0.08;
       ctx2.drawImage(img, drawX, drawY, drawW, drawH);
     }
 
