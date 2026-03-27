@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Sorian Systems | EHR &amp; ERP Consultants in NJ, NY &amp; Trinidad</title>
+  <meta name="description" content="Contact Sorian Systems to discuss EHR or ERP implementation for your clinic or enterprise in New Jersey, New York, or Trinidad &amp; Tobago. Book a free discovery call or reach us by phone or email.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://sorian-scroll-stop.vercel.app/contact.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Contact Sorian Systems | EHR &amp; ERP Implementation | NJ, NY &amp; Trinidad">
+  <meta property="og:description" content="Reach our EHR and ERP implementation team in New Jersey. Book a free discovery call or send a message — we serve clients in NJ, NY, and Trinidad &amp; Tobago.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sorian-scroll-stop.vercel.app/contact.html">
+  <meta property="og:site_name" content="Sorian Systems">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact Sorian Systems | EHR &amp; ERP Consultants | NJ &amp; Trinidad">
+  <meta name="twitter:description" content="Book a discovery call or reach our team directly.">
+
+  <!-- JSON-LD LocalBusiness Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Sorian Systems LLC",
+    "url": "https://sorian-scroll-stop.vercel.app",
+    "logo": "https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png",
+    "description": "Expert EHR and ERP implementation for clinics and businesses in the US and Trinidad.",
+    "telephone": "+1-848-437-0158",
+    "email": "sohil.r@soriansystems.com",
+    "sameAs": [
+      "https://www.linkedin.com/company/sorian-systems-llc"
+    ],
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "telephone": "+1-848-437-0158",
+        "contactType": "customer service",
+        "availableLanguage": "English",
+        "areaServed": ["US", "TT"]
+      }
+    ],
+    "areaServed": [
+      { "@type": "Country", "name": "United States" },
+      { "@type": "Country", "name": "Trinidad and Tobago" }
+    ]
+  }
+  </script>
+
+  <script defer src="/_vercel/insights/script.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #FF6B00;
+      --accent-rgb: 255, 107, 0;
+      --accent-light: #FF9A4D;
+      --bg: #0a0a0a;
+      --bg-card: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.06);
+      --text-primary: #f0f0f0;
+      --text-secondary: rgba(240,240,240,0.5);
+      --font-head: 'Space Grotesk', sans-serif;
+      --font-body: 'Archivo', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--accent); color: #000; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #111; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--accent), var(--accent-light));
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover { box-shadow: 0 0 6px rgba(var(--accent-rgb),0.6); }
+
+    #scrollProgress {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      z-index: 10000; transition: width 0.1s linear;
+    }
+
+    #starscape {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none; opacity: 0.6;
+    }
+
+    /* ─── NAVBAR ─── */
+    #navbar {
+      position: fixed; top: 12px; left: 0; right: 0;
+      z-index: 1000;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-inner {
+      max-width: 100%; margin: 0 auto; padding: 12px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #navbar.nav-scrolled .nav-inner {
+      max-width: 920px;
+      background: rgba(10,10,10,0.7);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: 100px; padding: 10px 28px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 36px; height: auto; }
+    .nav-logo-text {
+      font-family: var(--font-head); font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--text-primary);
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a {
+      font-family: var(--font-body); font-size: 0.875rem;
+      color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a.active { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent) !important; color: #000 !important;
+      padding: 8px 20px; border-radius: 8px;
+      font-weight: 600 !important; font-size: 0.8rem !important;
+      box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.3);
+      transition: all 0.2s ease !important;
+    }
+    .nav-cta:hover {
+      box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.5) !important;
+      transform: translateY(-1px);
+    }
+
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; z-index: 1001;
+      background: none; border: none;
+    }
+    .nav-hamburger span {
+      width: 24px; height: 2px; background: var(--text-primary);
+      border-radius: 2px; transition: all 0.3s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .mobile-nav {
+      display: none; position: fixed; inset: 0;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      z-index: 999; flex-direction: column;
+      align-items: center; justify-content: center; gap: 32px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: var(--font-head); font-size: 1.5rem; font-weight: 600;
+      color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease;
+    }
+    .mobile-nav a:hover, .mobile-nav a.active { color: var(--accent); }
+    .mobile-nav .nav-cta { font-size: 1rem !important; padding: 14px 36px; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      position: relative; min-height: 50vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; z-index: 1; padding-top: 80px;
+    }
+    .hero-bg { position: absolute; inset: 0; pointer-events: none; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(90px); }
+    .orb-1 { width: 550px; height: 550px; background: var(--accent); opacity: 0.08; top: -200px; right: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: #A886CD; opacity: 0.06; bottom: -150px; left: -80px; }
+    .grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 0 32px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(var(--accent-rgb), 0.1); border: 1px solid rgba(var(--accent-rgb), 0.2);
+      border-radius: 100px; padding: 6px 16px; margin-bottom: 28px;
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--accent);
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; background: var(--accent);
+      border-radius: 50%; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero-title {
+      font-family: var(--font-head); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; color: var(--text-primary);
+    }
+    .hero-title .accent { color: var(--accent); }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.15rem); color: var(--text-secondary);
+      line-height: 1.6; max-width: 600px; margin: 0 auto;
+    }
+
+    /* ─── COMMONS ─── */
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: block;
+    }
+    .section-title {
+      font-family: var(--font-head); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700;
+      line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── CONTACT SECTION ─── */
+    #contact-section {
+      position: relative; z-index: 1;
+      padding: 60px 32px 100px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* Contact Info */
+    .contact-info { display: flex; flex-direction: column; gap: 20px; }
+
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 28px;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .contact-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(var(--accent-rgb), 0.2);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+    .contact-card-header {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+    }
+    .contact-card-icon {
+      width: 44px; height: 44px;
+      background: rgba(var(--accent-rgb), 0.1);
+      border: 1px solid rgba(var(--accent-rgb), 0.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .contact-card-title {
+      font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+      color: var(--text-primary);
+    }
+    .contact-card-label {
+      font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent); display: block; margin-top: 2px;
+    }
+    .contact-card-body {
+      font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;
+    }
+    .contact-card-body a {
+      color: var(--text-primary); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .contact-card-body a:hover { color: var(--accent); }
+    .contact-card-body .email-row {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+    }
+    .contact-card-body .email-label {
+      font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--text-secondary);
+      background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .calendly-card {
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.08), rgba(var(--accent-rgb), 0.02));
+      border-color: rgba(var(--accent-rgb), 0.15);
+    }
+    .calendly-card .btn-primary {
+      margin-top: 16px; display: inline-block; font-size: 0.85rem; padding: 12px 28px;
+    }
+
+    /* Contact Form */
+    .contact-form-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 40px;
+    }
+    .contact-form-title {
+      font-family: var(--font-head); font-size: 1.3rem; font-weight: 700;
+      margin-bottom: 8px; color: var(--text-primary);
+    }
+    .contact-form-subtitle {
+      font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.5;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      font-family: var(--font-head); font-size: 0.8rem; font-weight: 600;
+      color: var(--text-primary); margin-bottom: 8px; display: block;
+      letter-spacing: 0.5px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      outline: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(240,240,240,0.25);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: rgba(var(--accent-rgb), 0.4);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.08);
+    }
+    .form-group textarea {
+      resize: vertical; min-height: 120px;
+    }
+    .form-group select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23FF6B00' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+    }
+    .form-group select option {
+      background: #1a1a1a;
+      color: var(--text-primary);
+    }
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .form-submit {
+      background: var(--accent);
+      color: #000;
+      padding: 16px 40px;
+      border: none;
+      border-radius: 12px;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.35);
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 8px;
+    }
+    .form-submit:hover {
+      box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.55);
+      transform: translateY(-2px);
+    }
+    .form-note {
+      font-size: 0.75rem; color: var(--text-secondary);
+      margin-top: 16px; text-align: center;
+      font-family: var(--font-mono); letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ─── LOCATIONS BAR ─── */
+    #locations-bar {
+      position: relative; z-index: 1;
+      background: linear-gradient(180deg, transparent, rgba(var(--accent-rgb), 0.03), transparent);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 32px;
+    }
+    .locations-bar-inner {
+      max-width: 800px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      text-align: center;
+    }
+    .loc-item { position: relative; }
+    .loc-flag { font-size: 2.4rem; margin-bottom: 12px; display: block; }
+    .loc-name {
+      font-family: var(--font-head); font-size: 1.15rem; font-weight: 700;
+      margin-bottom: 6px; color: var(--text-primary);
+    }
+    .loc-region {
+      font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: block;
+    }
+    .loc-desc {
+      font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
+    }
+    @media (max-width: 640px) {
+      .locations-bar-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ─── CTA ─── */
+    #cta {
+      position: relative; z-index: 1; text-align: center;
+      padding: 120px 32px; overflow: hidden;
+    }
+    .cta-orb {
+      position: absolute; width: 600px; height: 600px;
+      background: var(--accent); border-radius: 50%; filter: blur(120px);
+      opacity: 0.06; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-content h2 {
+      font-family: var(--font-head); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+      letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .cta-content p {
+      font-size: 1.05rem; color: var(--text-secondary);
+      max-width: 520px; margin: 0 auto 40px; line-height: 1.65;
+    }
+    .cta-actions {
+      display: flex; gap: 16px; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 28px;
+    }
+    .btn-primary {
+      background: var(--accent); color: #000; padding: 14px 32px;
+      border-radius: 12px; font-family: var(--font-head);
+      font-weight: 600; font-size: 0.95rem; text-decoration: none;
+      box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.35);
+      transition: all 0.3s ease; display: inline-block;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.55);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--text-primary);
+      padding: 14px 32px; border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px; font-family: var(--font-head); font-size: 0.95rem;
+      text-decoration: none; transition: all 0.3s ease; display: inline-block;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.3); transform: translateY(-2px);
+    }
+    .btn-large { font-size: 1.05rem !important; padding: 16px 44px !important; }
+    .cta-contact {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--text-secondary); letter-spacing: 1px;
+    }
+    .cta-contact a { color: var(--accent); text-decoration: none; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 60px 32px 40px; text-align: center;
+    }
+    .footer-inner { max-width: 900px; margin: 0 auto; }
+    .footer-brand {
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; margin-bottom: 24px;
+    }
+    .footer-brand img { width: 32px; }
+    .footer-brand-name {
+      font-family: var(--font-head); font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    .footer-links {
+      display: flex; justify-content: center; gap: 28px;
+      margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-secondary); text-decoration: none;
+      font-size: 0.875rem; transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { color: rgba(255,255,255,0.2); font-size: 0.78rem; }
+  </style>
+</head>
+<body>
+
+  <div id="scrollProgress"></div>
+  <canvas id="starscape"></canvas>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png" alt="Sorian Systems" onerror="this.style.display='none'">
+        <span class="nav-logo-text">Sorian Systems</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="https://calendly.com/soriansystemsllc" target="_blank" class="nav-cta">Book a Call</a>
+      </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="contact.html" class="active">Contact</a>
+    <a href="https://calendly.com/soriansystemsllc" target="_blank" class="nav-cta">Book a Call</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Get in Touch
+      </div>
+      <h1 class="hero-title">
+        Talk to Our EHR &amp; ERP<br><span class="accent">Implementation Team</span>
+      </h1>
+      <p class="hero-subtitle">
+        Ready to streamline your EHR or ERP systems? Reach our New Jersey-based team by phone, email, or book a free 30-minute discovery call. Serving clinics and businesses in NJ, NY, and Trinidad &amp; Tobago — we respond within one business day.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact-section">
+    <div class="contact-grid">
+
+      <!-- LEFT: Contact Info -->
+      <div class="contact-info reveal">
+        <!-- Phone -->
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <div class="contact-card-icon">📞</div>
+            <div>
+              <span class="contact-card-title">Call Us</span>
+              <span class="contact-card-label">Phone</span>
+            </div>
+          </div>
+          <div class="contact-card-body">
+            <a href="tel:18484370158" style="font-size: 1.1rem; font-family: var(--font-head); font-weight: 600;">(848) 437-0158</a>
+            <p style="margin-top: 6px; font-size: 0.8rem;">Available during U.S. business hours</p>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <div class="contact-card-icon">✉️</div>
+            <div>
+              <span class="contact-card-title">Email Us</span>
+              <span class="contact-card-label">Email</span>
+            </div>
+          </div>
+          <div class="contact-card-body">
+            <div class="email-row">
+              <span class="email-label">Primary</span>
+              <a href="mailto:sohil.r@soriansystems.com">sohil.r@soriansystems.com</a>
+            </div>
+            <div class="email-row">
+              <span class="email-label">General</span>
+              <a href="mailto:gail.ramsamooj@outlook.com">gail.ramsamooj@outlook.com</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendly -->
+        <div class="contact-card calendly-card">
+          <div class="contact-card-header">
+            <div class="contact-card-icon">📅</div>
+            <div>
+              <span class="contact-card-title">Book a Discovery Call</span>
+              <span class="contact-card-label">Calendly</span>
+            </div>
+          </div>
+          <div class="contact-card-body">
+            <p>Schedule a free 30-minute consultation to discuss your implementation needs and goals.</p>
+            <a href="https://calendly.com/soriansystemsllc" target="_blank" class="btn-primary">Schedule Now</a>
+          </div>
+        </div>
+
+        <!-- LinkedIn -->
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <div class="contact-card-icon">💼</div>
+            <div>
+              <span class="contact-card-title">Connect on LinkedIn</span>
+              <span class="contact-card-label">Social</span>
+            </div>
+          </div>
+          <div class="contact-card-body">
+            <a href="https://www.linkedin.com/company/sorian-systems-llc" target="_blank">linkedin.com/company/sorian-systems-llc →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Contact Form -->
+      <div class="contact-form-wrapper reveal">
+        <h3 class="contact-form-title">Send Us a Message</h3>
+        <p class="contact-form-subtitle">Fill out the form below and we'll get back to you within one business day.</p>
+
+        <form id="contactForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="john@company.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="company">Company / Organization</label>
+            <input type="text" id="company" name="company" placeholder="Your organization name">
+          </div>
+
+          <div class="form-group">
+            <label for="service">Service of Interest</label>
+            <select id="service" name="service">
+              <option value="">Select a service...</option>
+              <option value="ehr">EHR Implementation</option>
+              <option value="erp">ERP Software Implementation</option>
+              <option value="workflow">Workflow Optimization</option>
+              <option value="training">Change Management & Training</option>
+              <option value="support">Post-Launch Support</option>
+              <option value="practice">Practice Management Solutions</option>
+              <option value="other">Other / Not Sure</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us about your project, timeline, and any specific challenges you're facing..." required></textarea>
+          </div>
+
+          <button type="submit" class="form-submit" id="submitBtn">Send Message</button>
+          <p class="form-note">⚡ We typically respond within 24 hours</p>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LOCATIONS BAR -->
+  <section id="locations-bar">
+    <div class="locations-bar-inner reveal">
+      <div class="loc-item">
+        <span class="loc-flag">🇺🇸</span>
+        <h3 class="loc-name">United States</h3>
+        <span class="loc-region">Headquarters</span>
+        <p class="loc-desc">Greater New York / New Jersey metropolitan area. Serving clinics and businesses nationwide.</p>
+      </div>
+      <div class="loc-item">
+        <span class="loc-flag">🇹🇹</span>
+        <h3 class="loc-name">Trinidad & Tobago</h3>
+        <span class="loc-region">Caribbean Operations</span>
+        <p class="loc-desc">Supporting businesses and healthcare organizations across Trinidad & Tobago.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="padding: 80px 5vw; max-width: 860px; margin: 0 auto;">
+    <div class="section-header reveal" style="margin-bottom: 48px;">
+      <span class="section-label">Common Questions</span>
+      <h2 class="section-title">Before You Reach Out</h2>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; cursor: pointer;">
+        <summary style="font-family: var(--font-head); font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">What happens on a discovery call? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
+        <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7;">A discovery call is a free 30-minute conversation where we learn about your organization, your current systems, and your goals. We'll ask about your EHR or ERP requirements, your timeline, and any specific challenges you're facing — then outline how we can help and what a typical engagement looks like.</p>
+      </details>
+      <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; cursor: pointer;">
+        <summary style="font-family: var(--font-head); font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">Do you work with clients outside NJ and NY? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
+        <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7;">Yes. While we're headquartered in the New Jersey / New York area, we serve clients nationwide in the United States and across Trinidad &amp; Tobago. Many of our engagements involve remote or hybrid support — we adapt to what works best for your organization.</p>
+      </details>
+      <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; cursor: pointer;">
+        <summary style="font-family: var(--font-head); font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">How quickly do you respond to inquiries? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
+        <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7;">We respond to all inquiries within one business day. For urgent needs, call us directly at (848) 437-0158 during U.S. business hours and you'll reach a real member of our team — no chatbots, no call centers.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-orb"></div>
+    <div class="cta-content reveal">
+      <span class="section-label">Prefer to Talk?</span>
+      <h2>Book a Free<br>Discovery Call</h2>
+      <p>Skip the form — jump straight to a conversation. We'll discuss your needs, answer your questions, and outline next steps.</p>
+      <div class="cta-actions">
+        <a href="https://calendly.com/soriansystemsllc" target="_blank" class="btn-primary btn-large">Book a Discovery Call</a>
+        <a href="services.html" class="btn-secondary btn-large">View Our Services</a>
+      </div>
+      <div class="cta-contact">
+        Or call us directly: <a href="tel:18484370158">(848) 437-0158</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png" alt="Sorian Systems" onerror="this.style.display='none'">
+        <span class="footer-brand-name">Sorian Systems</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://calendly.com/soriansystemsllc" target="_blank">Book a Call</a>
+        <a href="https://www.linkedin.com/company/sorian-systems-llc" target="_blank">LinkedIn</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 Sorian Systems LLC. All rights reserved. &nbsp;|&nbsp; Optimizing Systems, Maximizing Potential.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ─── STARSCAPE ───
+    (function() {
+      const canvas = document.getElementById('starscape');
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+      function resize() {
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.scale(dpr, dpr);
+      }
+      function initStars() {
+        stars = [];
+        for (let i = 0; i < 180; i++) {
+          stars.push({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            radius: Math.random() * 1.2 + 0.3,
+            baseOpacity: Math.random() * 0.6 + 0.2,
+            driftX: (Math.random() - 0.5) * 0.03,
+            driftY: (Math.random() - 0.5) * 0.015,
+            twinkleSpeed: Math.random() * 0.0008 + 0.0003,
+            twinklePhase: Math.random() * Math.PI * 2,
+          });
+        }
+      }
+      function animate() {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        stars.forEach(s => {
+          s.x += s.driftX; s.y += s.driftY;
+          if (s.x < 0) s.x = window.innerWidth;
+          if (s.x > window.innerWidth) s.x = 0;
+          if (s.y < 0) s.y = window.innerHeight;
+          if (s.y > window.innerHeight) s.y = 0;
+          const twinkle = Math.sin(Date.now() * s.twinkleSpeed + s.twinklePhase);
+          const opacity = Math.max(0, s.baseOpacity + twinkle * 0.3);
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(animate);
+      }
+      resize(); initStars(); animate();
+      window.addEventListener('resize', () => { resize(); initStars(); });
+    })();
+
+    // ─── SCROLL PROGRESS ───
+    window.addEventListener('scroll', () => {
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      document.getElementById('scrollProgress').style.width = pct + '%';
+    }, { passive: true });
+
+    // ─── NAVBAR ───
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('nav-scrolled', window.scrollY > 80);
+    }, { passive: true });
+
+    // ─── MOBILE NAV ───
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+
+    // ─── SCROLL REVEAL ───
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ─── FORM HANDLER (placeholder) ───
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#22c55e';
+      btn.style.boxShadow = '0 0 24px rgba(34, 197, 94, 0.35)';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Send Message';
+        btn.style.background = '';
+        btn.style.boxShadow = '';
+        btn.disabled = false;
+        document.getElementById('contactForm').reset();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
