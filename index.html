@@ -1082,7 +1082,7 @@
     });
 
     // ─── FRAME SEQUENCE ───
-    const FRAME_COUNT = 106;
+    const FRAME_COUNT = 169;
     const canvas = document.getElementById('frameCanvas');
     const ctx2 = canvas.getContext('2d');
     const frames = [];
@@ -1113,20 +1113,20 @@
       let drawW, drawH, drawX, drawY;
 
       if (window.innerWidth > 768) {
-        // Contain-fit at 68% of canvas height — compact and sharp, no edge blowout
-        drawH = ch * 0.68;
+        // Contain-fit at 85% of canvas height — impactful but not edge-to-edge
+        drawH = ch * 0.85;
         drawW = drawH * imgRatio;
         // Clamp width for very wide viewports
-        if (drawW > cw * 0.80) {
-          drawW = cw * 0.80;
+        if (drawW > cw * 0.90) {
+          drawW = cw * 0.90;
           drawH = drawW / imgRatio;
         }
       } else {
-        // Mobile: 76% height contain-fit
-        drawH = ch * 0.76;
+        // Mobile: 82% height contain-fit
+        drawH = ch * 0.82;
         drawW = drawH * imgRatio;
-        if (drawW > cw * 0.92) {
-          drawW = cw * 0.92;
+        if (drawW > cw * 0.96) {
+          drawW = cw * 0.96;
           drawH = drawW / imgRatio;
         }
       }
