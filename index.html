@@ -470,12 +470,12 @@
     }
     .scroll-sticky::before {
       top: 0;
-      height: 12%;
+      height: 8%;
       background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
     }
     .scroll-sticky::after {
       bottom: 0;
-      height: 28%;
+      height: 18%;
       background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
     }
     #frameCanvas {
@@ -1110,27 +1110,30 @@
       ctx2.clearRect(0, 0, cw, ch);
 
       const imgRatio = img.naturalWidth / img.naturalHeight;
-      const canvasRatio = cw / ch;
       let drawW, drawH, drawX, drawY;
 
       if (window.innerWidth > 768) {
-        if (canvasRatio > imgRatio) {
-          drawW = cw; drawH = cw / imgRatio;
-        } else {
-          drawH = ch; drawW = ch * imgRatio;
+        // Contain-fit at 68% of canvas height — compact and sharp, no edge blowout
+        drawH = ch * 0.68;
+        drawW = drawH * imgRatio;
+        // Clamp width for very wide viewports
+        if (drawW > cw * 0.80) {
+          drawW = cw * 0.80;
+          drawH = drawW / imgRatio;
         }
       } else {
-        const zoom = 1.15;
-        if (canvasRatio > imgRatio) {
-          drawH = ch * zoom; drawW = drawH * imgRatio;
-        } else {
-          drawW = cw * zoom; drawH = drawW / imgRatio;
+        // Mobile: 76% height contain-fit
+        drawH = ch * 0.76;
+        drawW = drawH * imgRatio;
+        if (drawW > cw * 0.92) {
+          drawW = cw * 0.92;
+          drawH = drawW / imgRatio;
         }
       }
+
       drawX = (cw - drawW) / 2;
-      // Shift up by 8% of canvas height so the subject sits in the
-      // visible zone (above the 28% bottom gradient mask)
-      drawY = (ch - drawH) / 2 - ch * 0.08;
+      // Slight upward shift — subject stays centered in the visible zone
+      drawY = (ch - drawH) / 2 - ch * 0.04;
       ctx2.drawImage(img, drawX, drawY, drawW, drawH);
     }
 
