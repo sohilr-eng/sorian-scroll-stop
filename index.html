@@ -464,7 +464,6 @@
     #frameCanvas {
       position: absolute;
       top: 0; left: 0;
-      mix-blend-mode: multiply;
     }
     @media (max-width: 1024px) { .scroll-animation { height: 190vh; } }
     @media (max-width: 768px) { .scroll-animation { height: 160vh; } }
@@ -975,7 +974,8 @@
       const dpr = window.devicePixelRatio || 1;
       const cw = canvas.width;
       const ch = canvas.height;
-      ctx2.clearRect(0, 0, cw, ch);
+      ctx2.fillStyle = '#0a0a0a';
+      ctx2.fillRect(0, 0, cw, ch);
 
       const imgRatio = img.naturalWidth / img.naturalHeight;
       let drawW, drawH, drawX, drawY;
