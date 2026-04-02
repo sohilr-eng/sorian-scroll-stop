@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sorian Systems — EHR & ERP Implementation Consultants | NJ, NY & Trinidad</title>
   <meta name="description" content="Sorian Systems delivers expert EHR and ERP implementation, training, and go-live support for healthcare and enterprise clients in New Jersey, New York, and Trinidad & Tobago. Certified consultants. Proven results.">
-  <link rel="canonical" href="https://sorian-scroll-stop.vercel.app/">
+  <link rel="canonical" href="https://soriansystems.com/">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://sorian-scroll-stop.vercel.app/">
+  <meta property="og:url" content="https://soriansystems.com/">
   <meta property="og:title" content="Sorian Systems — EHR & ERP Implementation Consultants">
   <meta property="og:description" content="Expert EHR and ERP implementation, training, and go-live support for healthcare and enterprise clients in NJ, NY, and Trinidad & Tobago.">
-  <meta property="og:image" content="https://sorian-scroll-stop.vercel.app/frames/frame_0001.jpg">
+  <meta property="og:image" content="https://soriansystems.com/frames/frame_0001.jpg">
   <meta property="og:site_name" content="Sorian Systems">
   <meta property="og:locale" content="en_US">
 
@@ -20,7 +20,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sorian Systems — EHR & ERP Implementation Consultants">
   <meta name="twitter:description" content="Expert EHR and ERP implementation, training, and go-live support in NJ, NY, and Trinidad & Tobago.">
-  <meta name="twitter:image" content="https://sorian-scroll-stop.vercel.app/frames/frame_0001.jpg">
+  <meta name="twitter:image" content="https://soriansystems.com/frames/frame_0001.jpg">
 
   <!-- Geographic targeting -->
   <meta name="geo.region" content="US-NJ">
@@ -34,9 +34,9 @@
     "@type": ["LocalBusiness", "ProfessionalService"],
     "name": "Sorian Systems",
     "description": "EHR and ERP implementation, training, workflow optimization, and go-live support for healthcare organizations and enterprises in New Jersey, New York, and Trinidad & Tobago.",
-    "url": "https://sorian-scroll-stop.vercel.app/",
-    "logo": "https://sorian-scroll-stop.vercel.app/frames/frame_0001.jpg",
-    "image": "https://sorian-scroll-stop.vercel.app/frames/frame_0001.jpg",
+    "url": "https://soriansystems.com/",
+    "logo": "https://soriansystems.com/frames/frame_0001.jpg",
+    "image": "https://soriansystems.com/frames/frame_0001.jpg",
     "telephone": "",
     "email": "info@soriansystems.com",
     "address": {
@@ -458,85 +458,17 @@
       width: 100%;
       overflow: hidden;
     }
+    .scroll-sticky {
+      background: var(--bg);
+    }
     #frameCanvas {
       position: absolute;
       top: 0; left: 0;
+      mix-blend-mode: multiply;
     }
     @media (max-width: 1024px) { .scroll-animation { height: 190vh; } }
     @media (max-width: 768px) { .scroll-animation { height: 160vh; } }
 
-    /* ─── ANNOTATION CARDS ─── */
-    .annotation-card {
-      position: absolute;
-      bottom: 8vh;
-      left: 5vw;
-      max-width: 340px;
-      background: rgba(10, 10, 10, 0.7);
-      border: 1px solid rgba(var(--accent-rgb), 0.15);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-radius: 20px;
-      padding: 28px;
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.45s ease, transform 0.45s ease;
-      pointer-events: none;
-      z-index: 10;
-    }
-    .annotation-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-    .card-number {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-    }
-    .card-title {
-      font-family: var(--font-head);
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--text-primary);
-    }
-    .card-desc {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      line-height: 1.55;
-      margin-bottom: 18px;
-    }
-    .card-stat-number {
-      font-family: var(--font-head);
-      font-size: 1.9rem;
-      font-weight: 700;
-      color: var(--accent);
-      display: block;
-      line-height: 1;
-    }
-    .card-stat-label {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      display: block;
-      margin-top: 4px;
-      letter-spacing: 0.5px;
-    }
-    @media (max-width: 768px) {
-      .annotation-card {
-        bottom: 1.5vh;
-        left: 2vw; right: 2vw;
-        max-width: none;
-        padding: 12px 16px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        border-radius: 14px;
-      }
-      .card-desc, .card-stat { display: none; }
-      .card-number { margin-bottom: 0; min-width: 28px; }
-    }
 
     /* ─── SPECS ─── */
     #specs {
@@ -836,50 +768,6 @@
     <div class="scroll-sticky">
       <canvas id="frameCanvas"></canvas>
 
-      <!-- ANNOTATION CARD 1 -->
-      <div class="annotation-card" data-show="0.08" data-hide="0.26">
-        <div class="card-number">01 — EHR Implementation</div>
-        <h3 class="card-title">Go Live Without the Chaos</h3>
-        <p class="card-desc">Full-cycle EHR deployment for 1–25 provider clinics. We manage setup, data migration, and go-live from day one.</p>
-        <div class="card-stat">
-          <span class="card-stat-number">20%</span>
-          <span class="card-stat-label">Average reduction in patient intake time</span>
-        </div>
-      </div>
-
-      <!-- ANNOTATION CARD 2 -->
-      <div class="annotation-card" data-show="0.30" data-hide="0.50">
-        <div class="card-number">02 — ERP Integration</div>
-        <h3 class="card-title">Connect Every Department</h3>
-        <p class="card-desc">End-to-end ERP implementation that unifies finance, HR, inventory, and operations into one seamless system.</p>
-        <div class="card-stat">
-          <span class="card-stat-number">360°</span>
-          <span class="card-stat-label">Full operational visibility from day one</span>
-        </div>
-      </div>
-
-      <!-- ANNOTATION CARD 3 -->
-      <div class="annotation-card" data-show="0.54" data-hide="0.73">
-        <div class="card-number">03 — Workflow Optimization</div>
-        <h3 class="card-title">Eliminate Friction at Every Step</h3>
-        <p class="card-desc">We map and redesign your workflows to remove bottlenecks before they cost you time, revenue, and staff morale.</p>
-        <div class="card-stat">
-          <span class="card-stat-number">Proven</span>
-          <span class="card-stat-label">Methodology across clinics &amp; enterprises</span>
-        </div>
-      </div>
-
-      <!-- ANNOTATION CARD 4 -->
-      <div class="annotation-card" data-show="0.77" data-hide="0.96">
-        <div class="card-number">04 — Post-Launch Support</div>
-        <h3 class="card-title">We Stay Long After Go-Live</h3>
-        <p class="card-desc">Ongoing support, training reinforcement, and system tuning so your team stays confident and your investment keeps paying off.</p>
-        <div class="card-stat">
-          <span class="card-stat-number">Always On</span>
-          <span class="card-stat-label">U.S.-based support you can actually reach</span>
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -1141,34 +1029,6 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // ─── ANNOTATION CARDS + SNAP STOP ───
-    const HOLD_DURATION = 550;
-    let isSnapping = false;
-    const cards = document.querySelectorAll('.annotation-card');
-    const SNAP_ZONES = Array.from(cards).map(card => ({
-      show: parseFloat(card.dataset.show),
-      hide: parseFloat(card.dataset.hide),
-      snapped: false
-    }));
-
-    function updateCards(progress) {
-      cards.forEach((card, i) => {
-        const zone = SNAP_ZONES[i];
-        const visible = progress >= zone.show && progress <= zone.hide;
-        card.classList.toggle('visible', visible);
-        if (visible && !zone.snapped && !isSnapping) {
-          zone.snapped = true;
-          isSnapping = true;
-          document.body.style.overflow = 'hidden';
-          setTimeout(() => {
-            document.body.style.overflow = '';
-            isSnapping = false;
-          }, HOLD_DURATION);
-        }
-        if (!visible) zone.snapped = false;
-      });
-    }
-
     // ─── SCROLL → FRAME MAPPING ───
     window.addEventListener('scroll', () => {
       if (!ticking) {
@@ -1182,7 +1042,6 @@
             currentFrame = frameIndex;
             drawFrame(frameIndex);
           }
-          updateCards(progress);
           ticking = false;
         });
         ticking = true;
