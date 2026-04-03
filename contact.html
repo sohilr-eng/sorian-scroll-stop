@@ -871,13 +871,13 @@
       };
 
       try {
-        const res = await fetch(APPS_SCRIPT_URL, {
+        await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
+          mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
-        const data = await res.json();
-        if (data.status !== 'ok') throw new Error(data.error || 'Unknown error');
+        // no-cors returns an opaque response — cannot read it, assume success
 
         btn.textContent = 'Message Sent ✓';
         btn.style.background = '#22c55e';
