@@ -849,16 +849,9 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // ─── GOOGLE FORMS CONFIGURATION ───
-    const GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScH57g16Ze27HI2EOdcdpXeUJMkFfa_2JjHtP9mQ5CcyBRVLg/formResponse';
-    const FIELD_IDS = {
-      firstName: 'entry.430073066',
-      lastName:  'entry.1399762612',
-      email:     'entry.1603203587',
-      company:   'entry.329756637',
-      service:   'entry.1600795187',
-      message:   'entry.509473494',
-    };
+    // ─── FORM CONFIGURATION ───
+    // Paste your Apps Script web app URL here after deploying (see instructions in repo)
+    const APPS_SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
 
     // ─── FORM HANDLER ───
     async function handleFormSubmit(e) {
@@ -868,18 +861,23 @@
       btn.textContent = 'Sending…';
       btn.disabled = true;
 
-      const params = new URLSearchParams();
-      params.append(FIELD_IDS.firstName, document.getElementById('firstName').value);
-      params.append(FIELD_IDS.lastName,  document.getElementById('lastName').value);
-      params.append(FIELD_IDS.email,     document.getElementById('email').value);
-      params.append(FIELD_IDS.company,   document.getElementById('company').value);
-      params.append(FIELD_IDS.service,   document.getElementById('service').value);
-      params.append(FIELD_IDS.message,   document.getElementById('message').value);
+      const payload = {
+        firstName: document.getElementById('firstName').value,
+        lastName:  document.getElementById('lastName').value,
+        email:     document.getElementById('email').value,
+        company:   document.getElementById('company').value,
+        service:   document.getElementById('service').value,
+        message:   document.getElementById('message').value,
+      };
 
       try {
-        // no-cors: Google Forms blocks cross-origin reads but accepts the POST
-        // URLSearchParams sends as application/x-www-form-urlencoded, which Google Forms requires
-        await fetch(GOOGLE_FORM_ACTION, { method: 'POST', mode: 'no-cors', body: params });
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (data.status !== 'ok') throw new Error(data.error || 'Unknown error');
 
         btn.textContent = 'Message Sent ✓';
         btn.style.background = '#22c55e';
