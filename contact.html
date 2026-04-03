@@ -850,8 +850,10 @@
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     // ─── FORM CONFIGURATION ───
-    // Paste your Apps Script web app URL here after deploying (see instructions in repo)
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbypmyaXVnMXO5_ydRL9QTWD1VTIvfU0jY3FN_mCbL7eM1Y2aNCLVe6OARE9cqdixJxXog/exec';
+    // ─── AIRTABLE CONFIGURATION ───
+    const AIRTABLE_API_KEY = 'YOUR_AIRTABLE_API_KEY';
+    const AIRTABLE_BASE_ID = 'YOUR_BASE_ID';
+    const AIRTABLE_TABLE_NAME = 'Contacts';
 
     // ─── FORM HANDLER ───
     async function handleFormSubmit(e) {
@@ -862,21 +864,27 @@
       btn.disabled = true;
 
       const payload = {
-        firstName: document.getElementById('firstName').value,
-        lastName:  document.getElementById('lastName').value,
-        email:     document.getElementById('email').value,
-        company:   document.getElementById('company').value,
-        service:   document.getElementById('service').value,
-        message:   document.getElementById('message').value,
+        fields: {
+          'First Name': document.getElementById('firstName').value,
+          'Last Name':  document.getElementById('lastName').value,
+          'Email':      document.getElementById('email').value,
+          'Company':    document.getElementById('company').value,
+          'Service':    document.getElementById('service').value,
+          'Message':    document.getElementById('message').value,
+        }
       };
 
       try {
-        await fetch(APPS_SCRIPT_URL, {
+        const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`, {
           method: 'POST',
-          mode: 'no-cors',
+          headers: {
+            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify(payload),
         });
-        // no-cors returns an opaque response — cannot read it, assume success
+
+        if (!res.ok) throw new Error('Airtable error');
 
         btn.textContent = 'Message Sent ✓';
         btn.style.background = '#22c55e';
@@ -888,6 +896,7 @@
           btn.disabled = false;
           document.getElementById('contactForm').reset();
         }, 3000);
+
       } catch (err) {
         btn.textContent = originalText;
         btn.disabled = false;
