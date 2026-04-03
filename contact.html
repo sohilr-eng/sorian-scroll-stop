@@ -850,11 +850,6 @@
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     // ─── FORM CONFIGURATION ───
-    // ─── AIRTABLE CONFIGURATION ───
-    const AIRTABLE_API_KEY = 'YOUR_AIRTABLE_API_KEY';
-    const AIRTABLE_BASE_ID = 'YOUR_BASE_ID';
-    const AIRTABLE_TABLE_NAME = 'Contacts';
-
     // ─── FORM HANDLER ───
     async function handleFormSubmit(e) {
       e.preventDefault();
@@ -864,27 +859,22 @@
       btn.disabled = true;
 
       const payload = {
-        fields: {
-          'First Name': document.getElementById('firstName').value,
-          'Last Name':  document.getElementById('lastName').value,
-          'Email':      document.getElementById('email').value,
-          'Company':    document.getElementById('company').value,
-          'Service':    document.getElementById('service').value,
-          'Message':    document.getElementById('message').value,
-        }
+        firstName: document.getElementById('firstName').value,
+        lastName:  document.getElementById('lastName').value,
+        email:     document.getElementById('email').value,
+        company:   document.getElementById('company').value,
+        service:   document.getElementById('service').value,
+        message:   document.getElementById('message').value,
       };
 
       try {
-        const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`, {
+        const res = await fetch('/api/contact', {
           method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
 
-        if (!res.ok) throw new Error('Airtable error');
+        if (!res.ok) throw new Error('Submission error');
 
         btn.textContent = 'Message Sent ✓';
         btn.style.background = '#22c55e';
