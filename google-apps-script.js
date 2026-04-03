@@ -26,7 +26,12 @@ function doPost(e) {
   var result = { status: 'ok' };
 
   try {
-    var body = JSON.parse(e.postData.contents);
+    var body = {};
+    try {
+      body = JSON.parse(e.postData.contents);
+    } catch(err) {
+      body = e.parameter || {};
+    }
 
     var payload = {};
     payload[FIELD_IDS.firstName] = body.firstName || '';
