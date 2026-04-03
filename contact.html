@@ -6,13 +6,13 @@
   <title>Contact Sorian Systems | EHR &amp; ERP Consultants in NJ, NY &amp; Trinidad</title>
   <meta name="description" content="Contact Sorian Systems to discuss EHR or ERP implementation for your clinic or enterprise in New Jersey, New York, or Trinidad &amp; Tobago. Book a free discovery call or reach us by phone or email.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://sorian-scroll-stop.vercel.app/contact.html">
+  <link rel="canonical" href="https://soriansystems.com/contact.html">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Contact Sorian Systems | EHR &amp; ERP Implementation | NJ, NY &amp; Trinidad">
   <meta property="og:description" content="Reach our EHR and ERP implementation team in New Jersey. Book a free discovery call or send a message — we serve clients in NJ, NY, and Trinidad &amp; Tobago.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://sorian-scroll-stop.vercel.app/contact.html">
+  <meta property="og:url" content="https://soriansystems.com/contact.html">
   <meta property="og:site_name" content="Sorian Systems">
   <meta property="og:locale" content="en_US">
 
@@ -27,7 +27,7 @@
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "Sorian Systems LLC",
-    "url": "https://sorian-scroll-stop.vercel.app",
+    "url": "https://soriansystems.com",
     "logo": "https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png",
     "description": "Expert EHR and ERP implementation for clinics and businesses in the US and Trinidad.",
     "telephone": "+1-848-437-0158",
@@ -673,13 +673,12 @@
             <label for="service">Service of Interest</label>
             <select id="service" name="service">
               <option value="">Select a service...</option>
-              <option value="ehr">EHR Implementation</option>
-              <option value="erp">ERP Software Implementation</option>
-              <option value="workflow">Workflow Optimization</option>
-              <option value="training">Change Management & Training</option>
-              <option value="support">Post-Launch Support</option>
-              <option value="practice">Practice Management Solutions</option>
-              <option value="other">Other / Not Sure</option>
+              <option value="EHR implementation/optimization">EHR Implementation</option>
+              <option value="ERP implementation/optimization">ERP Software Implementation</option>
+              <option value="CRM implementation/optimization">CRM Implementation</option>
+              <option value="Website Design">Website Design</option>
+              <option value="App Design">App Development</option>
+              <option value="Other / Not Sure">Other / Not Sure</option>
             </select>
           </div>
 
@@ -850,21 +849,53 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // ─── FORM HANDLER (placeholder) ───
-    function handleFormSubmit(e) {
+    // ─── GOOGLE FORMS CONFIGURATION ───
+    const GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScH57g16Ze27HI2EOdcdpXeUJMkFfa_2JjHtP9mQ5CcyBRVLg/formResponse';
+    const FIELD_IDS = {
+      firstName: 'entry.430073066',
+      lastName:  'entry.1399762612',
+      email:     'entry.1603203587',
+      company:   'entry.329756637',
+      service:   'entry.1600795187',
+      message:   'entry.509473494',
+    };
+
+    // ─── FORM HANDLER ───
+    async function handleFormSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
-      btn.textContent = 'Message Sent ✓';
-      btn.style.background = '#22c55e';
-      btn.style.boxShadow = '0 0 24px rgba(34, 197, 94, 0.35)';
+      const originalText = btn.textContent;
+      btn.textContent = 'Sending…';
       btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = 'Send Message';
-        btn.style.background = '';
-        btn.style.boxShadow = '';
+
+      const params = new URLSearchParams();
+      params.append(FIELD_IDS.firstName, document.getElementById('firstName').value);
+      params.append(FIELD_IDS.lastName,  document.getElementById('lastName').value);
+      params.append(FIELD_IDS.email,     document.getElementById('email').value);
+      params.append(FIELD_IDS.company,   document.getElementById('company').value);
+      params.append(FIELD_IDS.service,   document.getElementById('service').value);
+      params.append(FIELD_IDS.message,   document.getElementById('message').value);
+
+      try {
+        // no-cors: Google Forms blocks cross-origin reads but accepts the POST
+        // URLSearchParams sends as application/x-www-form-urlencoded, which Google Forms requires
+        await fetch(GOOGLE_FORM_ACTION, { method: 'POST', mode: 'no-cors', body: params });
+
+        btn.textContent = 'Message Sent ✓';
+        btn.style.background = '#22c55e';
+        btn.style.boxShadow = '0 0 24px rgba(34, 197, 94, 0.35)';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '';
+          btn.style.boxShadow = '';
+          btn.disabled = false;
+          document.getElementById('contactForm').reset();
+        }, 3000);
+      } catch (err) {
+        btn.textContent = originalText;
         btn.disabled = false;
-        document.getElementById('contactForm').reset();
-      }, 3000);
+        alert('Something went wrong. Please try again or email us directly at sohil.r@soriansystems.com');
+      }
     }
   </script>
 </body>
