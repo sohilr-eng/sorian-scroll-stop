@@ -32,7 +32,12 @@ an EHR/ERP implementation consultancy serving NJ, NY, and Trinidad & Tobago.
 Fonts: Space Grotesk (headings), Archivo (body), JetBrains Mono (mono)
 
 ## Hero Video
-- `assets/hero-scrub.mp4` is scrubbed by scroll/cursor position in `index.html`
+- Full-bleed cursor-scrubbed hero in `index.html`; section bg gradient matches
+  the video's studio backdrop (#B2B6BD → #D9DADE) so the model blends into the page
+- Two encodes, both all-keyframe (`-g 1`) for instant seeking:
+  `assets/hero-scrub-hd.mp4` (1928px, desktop scrub) and
+  `assets/hero-scrub.mp4` (1280px, mobile autoplay loop) — selected by JS via data attrs
+- Source file: `assets/hf_20260610_220024_*.mp4` (original render, keep for re-encodes)
 - `assets/og-image.jpg` (1200×630) is the social share image, generated from a
   video still — referenced by og:image, twitter:image, and JSON-LD in `index.html`
 - The old `frames/` directory (169 pre-rendered JPGs for the canvas animation)
