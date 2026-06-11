@@ -270,66 +270,42 @@
 
     /* ─── HERO ─── */
     .hero-section {
-      position: relative;
-      width: 100%;
       min-height: 100svh;
       display: flex;
       align-items: center;
-      overflow: hidden;
-    }
-
-    .hero-video-wrap {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
       background: var(--bg);
+      overflow: hidden;
+      padding-top: 80px;
     }
 
-    .hero-video-wrap video {
+    .hero-split {
+      max-width: 1280px;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
+      margin: 0 auto;
+      padding: 60px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
     }
 
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to right,
-        rgba(12,12,12,0.78) 0%,
-        rgba(12,12,12,0.45) 55%,
-        rgba(12,12,12,0.10) 100%
-      );
-    }
-
-    @media (max-width: 768px) {
-      .hero-overlay {
-        background: rgba(12,12,12,0.65);
-      }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 680px;
-      padding: 0 clamp(24px, 6vw, 80px);
-      padding-top: 120px;
-      padding-bottom: 80px;
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .hero-eyebrow {
-      font-size: 12px;
-      letter-spacing: 0.16em;
+      font-size: 11px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent);
       font-weight: 500;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .hero-headline {
-      font-size: clamp(42px, 6vw, 80px);
+      font-size: clamp(38px, 4.2vw, 72px);
       font-weight: 300;
       line-height: 1.06;
       letter-spacing: -0.03em;
@@ -350,7 +326,7 @@
     }
 
     .hero-sub {
-      font-size: clamp(15px, 1.6vw, 18px);
+      font-size: clamp(15px, 1.4vw, 17px);
       color: var(--text-secondary);
       line-height: 1.7;
       margin-bottom: 40px;
@@ -361,6 +337,30 @@
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+    }
+
+    .hero-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hero-video-container {
+      width: 100%;
+      max-width: 640px;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    #heroVideo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      transform: translateZ(0);
     }
 
     .btn-primary {
@@ -397,17 +397,31 @@
     }
 
     .hero-scrub-hint {
-      position: absolute;
-      bottom: 32px;
-      left: clamp(24px, 6vw, 80px);
-      z-index: 1;
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--text-muted);
       animation: fadeUp 0.8s ease 1.6s both;
     }
-    @media (max-width: 1023px) { .hero-scrub-hint { display: none; } }
+
+    @media (max-width: 1023px) {
+      .hero-split {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 40px 24px 60px;
+        text-align: center;
+      }
+      .hero-text { align-items: center; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { order: -1; }
+      .hero-video-container { max-width: 100%; }
+      .hero-scrub-hint { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-split { padding: 32px 20px 48px; }
+      .hero-headline { font-size: clamp(32px, 9vw, 48px); }
+    }
 
     /* ─── SPECS ─── */
     #specs {
@@ -649,29 +663,28 @@
 
   <!-- HERO -->
   <section id="hero" class="hero-section">
-    <!-- Background video layer -->
-    <div class="hero-video-wrap">
-      <video id="heroVideo" muted playsinline preload="auto">
-        <source src="assets/hf_20260610_220024_48c83127-21c1-49d7-8d35-4e8935557bf6.mp4" type="video/mp4">
-      </video>
-      <div class="hero-overlay"></div>
-    </div>
-
-    <!-- Content layer -->
-    <div class="hero-content">
-      <p class="hero-eyebrow fade-up">EHR · ERP · Healthcare IT</p>
-      <h1 class="hero-headline fade-up fade-up-delay-1"><span id="typewriter-text"></span><span class="typewriter-cursor animate-blink"></span></h1>
-      <p class="hero-sub fade-up fade-up-delay-2">
-        Certified implementation consultants serving New Jersey,<br>
-        New York, and Trinidad &amp; Tobago.
-      </p>
-      <div class="hero-actions fade-up fade-up-delay-2">
-        <a href="https://calendly.com/soriansystemsllc" target="_blank" class="btn-primary">Book a Discovery Call</a>
-        <a href="services.html" class="btn-ghost">Our Services</a>
+    <div class="hero-split">
+      <div class="hero-text">
+        <p class="hero-eyebrow fade-up">EHR · ERP · Healthcare IT</p>
+        <h1 class="hero-headline fade-up fade-up-delay-1"><span id="typewriter-text"></span><span class="typewriter-cursor animate-blink"></span></h1>
+        <p class="hero-sub fade-up fade-up-delay-2">
+          Certified implementation consultants serving New Jersey,<br>
+          New York, and Trinidad &amp; Tobago.
+        </p>
+        <div class="hero-actions fade-up fade-up-delay-2">
+          <a href="https://calendly.com/soriansystemsllc" target="_blank" class="btn-primary">Book a Discovery Call</a>
+          <a href="services.html" class="btn-ghost">Our Services</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-video-container">
+          <video id="heroVideo" muted playsinline preload="auto">
+            <source src="assets/hero-scrub.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="hero-scrub-hint">Move your cursor to explore</p>
       </div>
     </div>
-
-    <div class="hero-scrub-hint">Move your cursor to explore</div>
   </section>
 
   <!-- SPECS -->
@@ -818,48 +831,49 @@
       if (!video) return;
 
       var targetTime = 0;
-      var prevX = null;
       var isMobile = window.innerWidth < 1024;
-
-      function onMouseMove(e) {
-        if (window.innerWidth < 1024) return;
-        if (!video.duration) return;
-
-        var currentX = e.clientX;
-        if (prevX === null) { prevX = currentX; return; }
-
-        var delta = currentX - prevX;
-        prevX = currentX;
-
-        targetTime += (delta / window.innerWidth) * 0.9 * video.duration;
-        targetTime = Math.max(0, Math.min(video.duration - 0.05, targetTime));
-
-        // Only re-seek when the previous seek has settled, to avoid queue buildup
-        if (!video.seeking) {
-          video.currentTime = targetTime;
-        }
-      }
-
-      function onSeeked() {
-        // Chase the latest target so fast cursor movement stays smooth
-        if (Math.abs(video.currentTime - targetTime) > 0.02) {
-          video.currentTime = targetTime;
-        }
-      }
 
       if (isMobile) {
         // Mobile: standard looping autoplay
         video.autoplay = true;
         video.loop = true;
+        video.muted = true;
         video.play().catch(function () {});
-      } else {
-        // Desktop: paused video scrubbed by cursor position
-        video.addEventListener('loadedmetadata', function () {
-          video.currentTime = 0.001; // paint the first frame
-        });
-        window.addEventListener('mousemove', onMouseMove);
-        video.addEventListener('seeked', onSeeked);
+        return;
       }
+
+      var rafId = null;
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function rafLoop() {
+        if (video.duration && Math.abs(video.currentTime - targetTime) > 0.015) {
+          var next = lerp(video.currentTime, targetTime, 0.14);
+          try {
+            if (video.fastSeek) { video.fastSeek(next); }
+            else { video.currentTime = next; }
+          } catch (e) {}
+        }
+        rafId = requestAnimationFrame(rafLoop);
+      }
+
+      function onMouseMove(e) {
+        if (!video.duration) return;
+        // Absolute mapping: screen-left = first frame, screen-right = last frame
+        var ratio = Math.max(0, Math.min(1, e.clientX / window.innerWidth));
+        targetTime = ratio * (video.duration - 0.05);
+      }
+
+      video.addEventListener('loadedmetadata', function () {
+        video.currentTime = 0.001; // paint the first frame
+        rafId = requestAnimationFrame(rafLoop);
+      });
+
+      window.addEventListener('mousemove', onMouseMove);
+
+      window.addEventListener('beforeunload', function () {
+        if (rafId) cancelAnimationFrame(rafId);
+      });
     }
 
     document.addEventListener('DOMContentLoaded', function () {
