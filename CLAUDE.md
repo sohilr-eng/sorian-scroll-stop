@@ -34,10 +34,13 @@ Fonts: Space Grotesk (headings), Archivo (body), JetBrains Mono (mono)
 ## Hero Video
 - Full-bleed cursor-scrubbed hero in `index.html`; section bg gradient matches
   the video's studio backdrop (#B2B6BD → #D9DADE) so the model blends into the page
-- Two encodes, both all-keyframe (`-g 1`) for instant seeking:
-  `assets/hero-scrub-hd.mp4` (1928px, desktop scrub) and
+- Two encodes, both all-keyframe (`-g 1`) for instant seeking, derived from the
+  4K source render: `assets/hero-scrub-hd.mp4` (1920px, desktop scrub) and
   `assets/hero-scrub.mp4` (1280px, mobile autoplay loop) — selected by JS via data attrs
-- Source file: `assets/hf_20260610_220024_*.mp4` (original render, keep for re-encodes)
+- Do NOT serve 4K directly: all-intra 4K decode can't keep up with 60/sec seeks
+- Scrub loop is gated by an IntersectionObserver — no decode cost off-hero
+- Source file: `assets/hf_20260611_025101_*.mp4` (4K render, keep for re-encodes;
+  the older `hf_20260610_*` file is the previous render)
 - `assets/og-image.jpg` (1200×630) is the social share image, generated from a
   video still — referenced by og:image, twitter:image, and JSON-LD in `index.html`
 - The old `frames/` directory (169 pre-rendered JPGs for the canvas animation)

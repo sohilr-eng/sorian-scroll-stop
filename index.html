@@ -284,6 +284,18 @@
       padding-top: 80px;
     }
 
+    /* soft studio vignette: corners fall off gently so the hero reads as a
+       lit space, and the video's own corner falloff blends with the page's */
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse 130% 105% at 50% 42%,
+        transparent 58%,
+        rgba(54,58,68,0.13) 100%);
+    }
+
     .hero-split {
       max-width: 1320px;
       width: 100%;
@@ -362,12 +374,13 @@
 
     .hero-video-container {
       width: 100%;
-      max-width: 760px;
-      aspect-ratio: 1928 / 1076;
+      max-width: 840px;
+      aspect-ratio: 1920 / 1072;
       overflow: hidden;
-      /* feather the frame edges into the matching section gradient */
-      -webkit-mask-image: radial-gradient(ellipse 100% 100% at center, #000 80%, transparent 99%);
-      mask-image: radial-gradient(ellipse 100% 100% at center, #000 80%, transparent 99%);
+      /* wide feather: the outer half of the frame fades gradually into the
+         section so no straight edge survives anywhere */
+      -webkit-mask-image: radial-gradient(ellipse 96% 92% at center, #000 50%, transparent 94%);
+      mask-image: radial-gradient(ellipse 96% 92% at center, #000 50%, transparent 94%);
     }
 
     #heroVideo {
@@ -708,7 +721,7 @@
       <div class="hero-visual">
         <div class="hero-video-container">
           <video id="heroVideo" muted playsinline preload="auto"
-                 data-src-desktop="assets/hero-scrub-4k.mp4"
+                 data-src-desktop="assets/hero-scrub-hd.mp4"
                  data-src-mobile="assets/hero-scrub.mp4"></video>
         </div>
       </div>
@@ -862,10 +875,11 @@
       var targetTime = 0;
       var isMobile = window.innerWidth < 1024;
 
-      // 4K file for desktop scrubbing; lighter encode for mobile autoplay
+      // 1928px all-keyframe file for desktop scrubbing (4K decodes too slowly
+      // to seek 60x/sec); lighter 1280px encode for mobile autoplay
       video.src = isMobile
         ? (video.dataset.srcMobile || 'assets/hero-scrub.mp4')
-        : (video.dataset.srcDesktop || 'assets/hero-scrub-4k.mp4');
+        : (video.dataset.srcDesktop || 'assets/hero-scrub-hd.mp4');
       video.load();
 
       if (isMobile) {
@@ -878,6 +892,7 @@
       }
 
       var rafId = null;
+      var heroVisible = true;
 
       function lerp(a, b, t) { return a + (b - a) * t; }
 
@@ -892,8 +907,15 @@
         rafId = requestAnimationFrame(rafLoop);
       }
 
+      function startLoop() {
+        if (rafId === null) rafId = requestAnimationFrame(rafLoop);
+      }
+      function stopLoop() {
+        if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+      }
+
       function onMouseMove(e) {
-        if (!video.duration) return;
+        if (!heroVisible || !video.duration) return;
         // Absolute mapping: screen-left = first frame, screen-right = last frame
         var ratio = Math.max(0, Math.min(1, e.clientX / window.innerWidth));
         targetTime = ratio * (video.duration - 0.05);
@@ -901,13 +923,24 @@
 
       video.addEventListener('loadedmetadata', function () {
         video.currentTime = 0.001; // paint the first frame
-        rafId = requestAnimationFrame(rafLoop);
+        if (heroVisible) startLoop();
       });
+
+      // Only seek while the hero is on screen, so scrolling the rest of the
+      // page never pays the video-decode cost
+      var hero = document.getElementById('hero');
+      if ('IntersectionObserver' in window && hero) {
+        new IntersectionObserver(function (entries) {
+          heroVisible = entries[0].isIntersecting;
+          if (heroVisible && video.readyState >= 1) startLoop();
+          else if (!heroVisible) stopLoop();
+        }, { threshold: 0.05 }).observe(hero);
+      }
 
       window.addEventListener('mousemove', onMouseMove);
 
       window.addEventListener('beforeunload', function () {
-        if (rafId) cancelAnimationFrame(rafId);
+        stopLoop();
       });
     }
 
