@@ -6,7 +6,7 @@ an EHR/ERP implementation consultancy serving NJ, NY, and Trinidad & Tobago.
 
 - **Live URL**: https://sorian-scroll-stop.vercel.app (also soriansystems.com — DNS being migrated from Siteground)
 - **GitHub**: https://github.com/sohilr-eng/sorian-scroll-stop
-- **Deployment**: Vercel — auto-deploys on push to `main`
+- **Deployment**: Vercel — auto-deploys on push to `master`
 
 ## Tech Stack
 - Pure HTML/CSS/JS (no build step, no framework, no package.json)
@@ -17,7 +17,7 @@ an EHR/ERP implementation consultancy serving NJ, NY, and Trinidad & Tobago.
 ## Pages
 | File | Route | Purpose |
 |------|-------|---------|
-| `index.html` | `/` | Homepage with scroll-driven frame animation |
+| `index.html` | `/` | Homepage with scroll-scrubbed hero video |
 | `about.html` | `/about` | Company profile & methodology |
 | `services.html` | `/services` | EHR/ERP service catalog |
 | `contact.html` | `/contact` | Lead capture form → Airtable |
@@ -31,11 +31,12 @@ an EHR/ERP implementation consultancy serving NJ, NY, and Trinidad & Tobago.
 ```
 Fonts: Space Grotesk (headings), Archivo (body), JetBrains Mono (mono)
 
-## Scroll Animation
-- 169 pre-rendered JPG frames in `frames/frame_0001.jpg` … `frame_0169.jpg`
-- Canvas element in `index.html` plays frames based on scroll position
-- Sticky container height: 220vh desktop / 190vh (1024px) / 160vh (768px)
-- **Do not delete or rename frames** — the animation breaks
+## Hero Video
+- `assets/hero-scrub.mp4` is scrubbed by scroll/cursor position in `index.html`
+- `assets/og-image.jpg` (1200×630) is the social share image, generated from a
+  video still — referenced by og:image, twitter:image, and JSON-LD in `index.html`
+- The old `frames/` directory (169 pre-rendered JPGs for the canvas animation)
+  was removed in June 2026 when the video hero replaced it
 
 ## API Route
 `api/contact.js` — POST only, proxies to Airtable
@@ -60,7 +61,7 @@ python -m http.server 8080
 # Make changes, then:
 git add <files>
 git commit -m "description"
-git push origin main   # Vercel auto-deploys in ~30s
+git push origin master   # Vercel auto-deploys in ~30s
 ```
 
 ## SEO Files
