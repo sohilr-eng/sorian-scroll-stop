@@ -289,6 +289,9 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .hero-video-wrap video {
@@ -297,6 +300,20 @@
       object-fit: cover;
       object-position: center;
       transform: translateZ(0);
+    }
+
+    /* Desktop: render the video below its native 1928px so lines stay crisp,
+       and feather its edges into the matching section gradient */
+    @media (min-width: 1024px) {
+      .hero-video-wrap video {
+        width: auto;
+        height: auto;
+        max-width: min(94vw, 1500px);
+        max-height: min(86svh, 800px);
+        object-fit: contain;
+        -webkit-mask-image: radial-gradient(ellipse 68% 62% at center, #000 52%, transparent 97%);
+        mask-image: radial-gradient(ellipse 68% 62% at center, #000 52%, transparent 97%);
+      }
     }
 
     .hero-content {
