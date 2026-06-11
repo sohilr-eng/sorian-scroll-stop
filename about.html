@@ -55,21 +55,38 @@
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --accent: #FF6B00;
-      --accent-rgb: 255, 107, 0;
-      --accent-light: #FF9A4D;
-      --bg: #0a0a0a;
+      --accent: #E8570A;
+      --accent-rgb: 232, 87, 10;
+      --accent-light: #FF8A3D;
+      --bg: #0C0C0C;
+      --bg-surface: rgba(255,255,255,0.04);
       --bg-card: rgba(255,255,255,0.03);
-      --border: rgba(255,255,255,0.06);
-      --text-primary: #f0f0f0;
-      --text-secondary: rgba(240,240,240,0.5);
-      --font-head: 'Space Grotesk', sans-serif;
-      --font-body: 'Archivo', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --border: rgba(255,255,255,0.07);
+      --border-strong: rgba(255,255,255,0.14);
+      --text-primary: #EFEFEF;
+      --text-secondary: #9A9A9A;
+      --text-muted: rgba(239,239,239,0.35);
+      --font-head: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+    .animate-blink { animation: blink 1s step-end infinite; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+    .fade-up { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .fade-up-delay-1 { animation-delay: 0.1s; }
+    .fade-up-delay-2 { animation-delay: 0.22s; }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -81,7 +98,7 @@
       overflow-x: hidden;
     }
 
-    ::selection { background: var(--accent); color: #000; }
+    ::selection { background: var(--accent); color: #fff; }
 
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #111; }
@@ -101,92 +118,79 @@
       transition: width 0.1s linear;
     }
 
-    /* ─── STARSCAPE ─── */
-    #starscape {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      opacity: 0.6;
-    }
-
     /* ─── NAVBAR ─── */
     #navbar {
       position: fixed;
-      top: 12px; left: 0; right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 1000;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: background 0.35s ease, border-color 0.35s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #navbar.nav-scrolled {
+      background: rgba(12,12,12,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom-color: var(--border);
     }
     .nav-inner {
-      max-width: 100%;
+      max-width: 1320px;
       margin: 0 auto;
-      padding: 12px 32px;
+      padding: 20px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    #navbar.nav-scrolled .nav-inner {
-      max-width: 920px;
-      background: rgba(10,10,10,0.7);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 100px;
-      padding: 10px 28px;
     }
     .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
       text-decoration: none;
-    }
-    .nav-logo img { width: 36px; height: auto; }
-    .nav-logo-text {
-      font-family: var(--font-head);
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      font-size: 21px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
       color: var(--text-primary);
+      user-select: none;
     }
+    .nav-logo .logo-mark { color: var(--accent); }
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 8px;
     }
     .nav-links a {
       font-family: var(--font-body);
-      font-size: 0.875rem;
+      font-size: 16px;
       color: var(--text-secondary);
       text-decoration: none;
-      transition: color 0.2s ease;
+      transition: color 0.2s ease, opacity 0.2s ease;
+      padding: 4px 8px;
     }
     .nav-links a:hover { color: var(--text-primary); }
     .nav-links a.active { color: var(--accent); }
+    .nav-divider {
+      color: var(--text-muted);
+      user-select: none;
+      font-size: 16px;
+    }
     .nav-cta {
-      background: var(--accent) !important;
-      color: #000 !important;
-      padding: 8px 20px;
-      border-radius: 8px;
-      font-weight: 600 !important;
-      font-size: 0.8rem !important;
-      box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.3);
-      transition: all 0.2s ease !important;
+      margin-left: 20px;
+      padding: 9px 22px !important;
+      border: 1px solid var(--accent);
+      border-radius: 100px;
+      color: var(--accent) !important;
+      font-size: 15px !important;
+      font-weight: 500;
+      transition: all 0.25s ease !important;
     }
     .nav-cta:hover {
-      box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.5) !important;
-      transform: translateY(-1px);
+      background: var(--accent);
+      color: #fff !important;
     }
 
     /* ─── MOBILE NAV ─── */
     .nav-hamburger {
       display: none;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
       cursor: pointer;
-      padding: 4px;
+      padding: 6px;
       z-index: 1001;
       background: none;
       border: none;
@@ -195,38 +199,52 @@
       width: 24px; height: 2px;
       background: var(--text-primary);
       border-radius: 2px;
-      transition: all 0.3s ease;
+      transition: all 0.28s ease;
     }
     .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
     .mobile-nav {
-      display: none;
       position: fixed;
       inset: 0;
-      background: rgba(10,10,10,0.95);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background: rgba(12,12,12,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       z-index: 999;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 32px;
+      gap: 36px;
+      display: flex;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
     }
-    .mobile-nav.open { display: flex; }
+    .mobile-nav.open { opacity: 1; pointer-events: auto; }
     .mobile-nav a {
-      font-family: var(--font-head);
-      font-size: 1.5rem;
-      font-weight: 600;
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
       color: var(--text-secondary);
       text-decoration: none;
       transition: color 0.2s ease;
+      opacity: 0;
+      transform: translateY(12px);
     }
+    .mobile-nav.open a {
+      animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .mobile-nav.open a:nth-child(1) { animation-delay: 0.05s; }
+    .mobile-nav.open a:nth-child(2) { animation-delay: 0.11s; }
+    .mobile-nav.open a:nth-child(3) { animation-delay: 0.17s; }
+    .mobile-nav.open a:nth-child(4) { animation-delay: 0.23s; }
+    .mobile-nav.open a:nth-child(5) { animation-delay: 0.29s; }
     .mobile-nav a:hover, .mobile-nav a.active { color: var(--accent); }
     .mobile-nav .nav-cta {
-      font-size: 1rem !important;
-      padding: 14px 36px;
+      font-size: 18px !important;
+      padding: 12px 32px !important;
+      margin-left: 0;
     }
 
     @media (max-width: 768px) {
@@ -305,9 +323,9 @@
     .hero-title {
       font-family: var(--font-head);
       font-size: clamp(2.4rem, 5vw, 4rem);
-      font-weight: 700;
+      font-weight: 300;
       line-height: 1.1;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       margin-bottom: 20px;
       color: var(--text-primary);
     }
@@ -323,19 +341,20 @@
     /* ─── SECTION COMMONS ─── */
     .section-label {
       font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 3px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 12px;
+      font-weight: 500;
+      margin-bottom: 14px;
       display: block;
     }
     .section-title {
       font-family: var(--font-head);
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 700;
+      font-weight: 300;
       line-height: 1.15;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       margin-bottom: 16px;
     }
     .section-subtitle {
@@ -376,7 +395,7 @@
     .mission-text h3 {
       font-family: var(--font-head);
       font-size: 1.4rem;
-      font-weight: 700;
+      font-weight: 500;
       margin-bottom: 16px;
       color: var(--text-primary);
     }
@@ -405,7 +424,7 @@
     .mission-stat-number {
       font-family: var(--font-head);
       font-size: 2.2rem;
-      font-weight: 700;
+      font-weight: 400;
       color: var(--accent);
       display: block;
       line-height: 1;
@@ -461,7 +480,7 @@
     .location-name {
       font-family: var(--font-head);
       font-size: 1.3rem;
-      font-weight: 700;
+      font-weight: 500;
       margin-bottom: 8px;
       color: var(--text-primary);
     }
@@ -541,7 +560,7 @@
     .value-card h3 {
       font-family: var(--font-head);
       font-size: 1.05rem;
-      font-weight: 700;
+      font-weight: 500;
       margin-bottom: 10px;
       color: var(--text-primary);
     }
@@ -576,9 +595,10 @@
     .cta-content h2 {
       font-family: var(--font-head);
       font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
+      font-weight: 300;
+      letter-spacing: -0.025em;
+      line-height: 1.12;
+      margin-bottom: 18px;
     }
     .cta-content p {
       font-size: 1.05rem;
@@ -596,36 +616,36 @@
     }
     .btn-primary {
       background: var(--accent);
-      color: #000;
-      padding: 14px 32px;
-      border-radius: 12px;
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 6px;
       font-family: var(--font-head);
-      font-weight: 600;
-      font-size: 0.95rem;
+      font-weight: 500;
+      font-size: 15px;
       text-decoration: none;
-      box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.35);
-      transition: all 0.3s ease;
+      transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
       display: inline-block;
     }
     .btn-primary:hover {
-      box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.55);
-      transform: translateY(-2px);
+      background: var(--accent-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(var(--accent-rgb), 0.3);
     }
     .btn-secondary {
       background: transparent;
       color: var(--text-primary);
-      padding: 14px 32px;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 12px;
+      padding: 12px 24px;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
       font-family: var(--font-head);
-      font-size: 0.95rem;
+      font-size: 15px;
+      font-weight: 500;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: border-color 0.2s, color 0.2s;
       display: inline-block;
     }
     .btn-secondary:hover {
-      border-color: rgba(255,255,255,0.3);
-      transform: translateY(-2px);
+      border-color: var(--text-secondary);
     }
     .btn-large {
       font-size: 1.05rem !important;
@@ -646,31 +666,26 @@
     footer {
       position: relative;
       z-index: 1;
+      background: #0C0C0C;
       border-top: 1px solid var(--border);
-      padding: 60px 32px 40px;
+      padding: 56px 32px;
       text-align: center;
     }
     .footer-inner { max-width: 900px; margin: 0 auto; }
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-    .footer-brand img { width: 32px; }
     .footer-brand-name {
       font-family: var(--font-head);
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      display: block;
     }
+    .footer-brand-name .logo-mark { color: var(--accent); }
     .footer-links {
       display: flex;
       justify-content: center;
       gap: 28px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
     }
     .footer-links a {
@@ -681,7 +696,7 @@
     }
     .footer-links a:hover { color: var(--accent); }
     .footer-copy {
-      color: rgba(255,255,255,0.2);
+      color: var(--text-muted);
       font-size: 0.78rem;
     }
   </style>
@@ -691,20 +706,17 @@
   <!-- SCROLL PROGRESS -->
   <div id="scrollProgress"></div>
 
-  <!-- STARSCAPE -->
-  <canvas id="starscape"></canvas>
-
   <!-- NAVBAR -->
   <nav id="navbar">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <img src="https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png" alt="Sorian Systems" onerror="this.style.display='none'">
-        <span class="nav-logo-text">Sorian Systems</span>
-      </a>
+      <a href="index.html" class="nav-logo">Sorian Systems<span class="logo-mark">.</span></a>
       <div class="nav-links">
         <a href="index.html">Home</a>
+        <span class="nav-divider">·</span>
         <a href="about.html" class="active">About</a>
+        <span class="nav-divider">·</span>
         <a href="services.html">Services</a>
+        <span class="nav-divider">·</span>
         <a href="contact.html">Contact</a>
         <a href="https://calendly.com/soriansystemsllc" target="_blank" class="nav-cta">Book a Call</a>
       </div>
@@ -918,19 +930,19 @@
     </script>
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; cursor: pointer;">
-        <summary style="font-family: var(--font-head); font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">Where is Sorian Systems located? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
+        <summary style="font-family: var(--font-head); font-weight: 500; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">Where is Sorian Systems located? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
         <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7;">Sorian Systems is headquartered in the Greater New Jersey / New York metropolitan area. We serve clients across New Jersey, New York, and Trinidad &amp; Tobago — bringing the same standard of excellence to every engagement regardless of geography.</p>
       </details>
       <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; cursor: pointer;">
-        <summary style="font-family: var(--font-head); font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">What EHR systems do you implement? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
+        <summary style="font-family: var(--font-head); font-weight: 500; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">What EHR systems do you implement? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
         <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7;">We are vendor-agnostic and work with the EHR platform that best fits your clinic. Our consultants have experience with Epic, Cerner (Oracle Health), athenahealth, eClinicalWorks, and other major platforms commonly used by clinics in New Jersey and New York.</p>
       </details>
       <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; cursor: pointer;">
-        <summary style="font-family: var(--font-head); font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">What ERP platforms do you support? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
+        <summary style="font-family: var(--font-head); font-weight: 500; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">What ERP platforms do you support? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
         <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7;">We implement SAP, Microsoft Dynamics 365, Oracle ERP, and other leading enterprise platforms. We evaluate your business requirements first and recommend the best-fit ERP solution — we never push a vendor we don't believe is right for you.</p>
       </details>
       <details style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; cursor: pointer;">
-        <summary style="font-family: var(--font-head); font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">Do you work with small clinics? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
+        <summary style="font-family: var(--font-head); font-weight: 500; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">Do you work with small clinics? <span style="color: var(--accent); font-size: 1.2rem;">+</span></summary>
         <p style="margin-top: 12px; color: var(--text-secondary); line-height: 1.7;">Absolutely. Our EHR implementation service is designed for 1–25 provider clinics. Whether you're a solo practitioner in NJ or a multi-specialty group in New York, we tailor the engagement to your size, budget, and specialty.</p>
       </details>
     </div>
@@ -956,10 +968,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="https://soriansystems.com/wp-content/uploads/2025/02/cropped-SYSTEMS_inPixio-134x107.png" alt="Sorian Systems" onerror="this.style.display='none'">
-        <span class="footer-brand-name">Sorian Systems</span>
-      </div>
+      <span class="footer-brand-name">Sorian Systems<span class="logo-mark">.</span></span>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -973,56 +982,6 @@
   </footer>
 
   <script>
-    // ─── STARSCAPE ───
-    (function() {
-      const canvas = document.getElementById('starscape');
-      const ctx = canvas.getContext('2d');
-      let stars = [];
-      function resize() {
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = window.innerWidth * dpr;
-        canvas.height = window.innerHeight * dpr;
-        canvas.style.width = window.innerWidth + 'px';
-        canvas.style.height = window.innerHeight + 'px';
-        ctx.scale(dpr, dpr);
-      }
-      function initStars() {
-        stars = [];
-        for (let i = 0; i < 180; i++) {
-          stars.push({
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-            radius: Math.random() * 1.2 + 0.3,
-            baseOpacity: Math.random() * 0.6 + 0.2,
-            driftX: (Math.random() - 0.5) * 0.03,
-            driftY: (Math.random() - 0.5) * 0.015,
-            twinkleSpeed: Math.random() * 0.0008 + 0.0003,
-            twinklePhase: Math.random() * Math.PI * 2,
-          });
-        }
-      }
-      function animate() {
-        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        stars.forEach(s => {
-          s.x += s.driftX;
-          s.y += s.driftY;
-          if (s.x < 0) s.x = window.innerWidth;
-          if (s.x > window.innerWidth) s.x = 0;
-          if (s.y < 0) s.y = window.innerHeight;
-          if (s.y > window.innerHeight) s.y = 0;
-          const twinkle = Math.sin(Date.now() * s.twinkleSpeed + s.twinklePhase);
-          const opacity = Math.max(0, s.baseOpacity + twinkle * 0.3);
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255,255,255,${opacity})`;
-          ctx.fill();
-        });
-        requestAnimationFrame(animate);
-      }
-      resize(); initStars(); animate();
-      window.addEventListener('resize', () => { resize(); initStars(); });
-    })();
-
     // ─── SCROLL PROGRESS ───
     window.addEventListener('scroll', () => {
       const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
@@ -1031,7 +990,7 @@
 
     // ─── NAVBAR ───
     window.addEventListener('scroll', () => {
-      document.getElementById('navbar').classList.toggle('nav-scrolled', window.scrollY > 80);
+      document.getElementById('navbar').classList.toggle('nav-scrolled', window.scrollY > 60);
     }, { passive: true });
 
     // ─── MOBILE NAV ───

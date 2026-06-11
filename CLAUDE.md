@@ -1,0 +1,80 @@
+# Sorian Systems Website — Claude Workspace Guide
+
+## Project Overview
+Static marketing site + 1 Vercel serverless function for Sorian Systems LLC,
+an EHR/ERP implementation consultancy serving NJ, NY, and Trinidad & Tobago.
+
+- **Live URL**: https://sorian-scroll-stop.vercel.app (also soriansystems.com — DNS being migrated from Siteground)
+- **GitHub**: https://github.com/sohilr-eng/sorian-scroll-stop
+- **Deployment**: Vercel — auto-deploys on push to `main`
+
+## Tech Stack
+- Pure HTML/CSS/JS (no build step, no framework, no package.json)
+- Vercel Serverless Function: `api/contact.js` (Node.js)
+- Data: Airtable (contact form submissions → "Contacts" table)
+- Analytics: Vercel Web Analytics
+
+## Pages
+| File | Route | Purpose |
+|------|-------|---------|
+| `index.html` | `/` | Homepage with scroll-driven frame animation |
+| `about.html` | `/about` | Company profile & methodology |
+| `services.html` | `/services` | EHR/ERP service catalog |
+| `contact.html` | `/contact` | Lead capture form → Airtable |
+
+## Key Design Tokens (CSS variables, duplicated in each HTML file)
+```css
+--accent: #FF6B00          /* orange CTA color */
+--bg: #0a0a0a              /* near-black background */
+--text-primary: #f0f0f0
+--text-secondary: rgba(240,240,240,0.5)
+```
+Fonts: Space Grotesk (headings), Archivo (body), JetBrains Mono (mono)
+
+## Scroll Animation
+- 169 pre-rendered JPG frames in `frames/frame_0001.jpg` … `frame_0169.jpg`
+- Canvas element in `index.html` plays frames based on scroll position
+- Sticky container height: 220vh desktop / 190vh (1024px) / 160vh (768px)
+- **Do not delete or rename frames** — the animation breaks
+
+## API Route
+`api/contact.js` — POST only, proxies to Airtable
+Required env vars (set in Vercel dashboard):
+- `AIRTABLE_BASE_ID`
+- `AIRTABLE_API_KEY`
+
+## Local Development
+Because there's no build step, any static file server works:
+```powershell
+# Option 1 — Vercel CLI (also runs the serverless function locally)
+vercel dev          # requires: vercel login, then vercel link
+
+# Option 2 — quick static preview (no API)
+npx serve .
+# or
+python -m http.server 8080
+```
+
+## Deployment Workflow
+```powershell
+# Make changes, then:
+git add <files>
+git commit -m "description"
+git push origin main   # Vercel auto-deploys in ~30s
+```
+
+## SEO Files
+- `sitemap.xml` — update `<lastmod>` when pages change
+- `robots.txt` — allow all, points to sitemap
+
+## Shared CSS Pattern
+Styles are inlined in each HTML file's `<style>` tag.
+If making a change that affects multiple pages (nav, footer, typography),
+**update all four HTML files** — there is no shared stylesheet yet.
+
+## Business Context
+- Company: Sorian Systems LLC
+- Contact: info@soriansystems.com / +1-848-437-0158
+- LinkedIn: linkedin.com/company/sorian-systems
+- Service areas: New Jersey, New York, Trinidad & Tobago
+- Target clients: healthcare orgs, enterprises adopting EHR/ERP
