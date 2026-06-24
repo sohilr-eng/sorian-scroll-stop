@@ -31,25 +31,30 @@ an EHR/ERP implementation consultancy serving NJ, NY, and Trinidad & Tobago.
 ```
 Fonts: Space Grotesk (headings), Archivo (body), JetBrains Mono (mono)
 
-## Hero Video
-- Two-column split hero in `index.html` (text left, phoenix right); section bg
-  gradient (#B1B4BB → #C6C9CF → #D9D9E0) is sampled from the render's studio
-  backdrop so the emblem dissolves into the page via a radial feather mask
-- The phoenix is a **passive autoplay loop** (no scrubbing) with a baked-in idle:
-  slow float + amber energy-strip "breathing" pulse. On top of the video, a
-  cursor-tracked `.hero-glow` div (radial amber gradient, `mix-blend-mode: screen`)
-  follows the pointer over the emblem — JS sets `--gx`/`--gy`, CSS `:hover` fades it in
-- Two encodes, normal-GOP (passive loop, no seeking → small files), from the 4K
-  source: `assets/hero-phoenix-hd.mp4` (1920px desktop, ~930KB) and
-  `assets/hero-phoenix.mp4` (1280px mobile, ~410KB) — selected by JS via data attrs.
-  Poster: `assets/hero-phoenix-poster.jpg` (first frame)
-- IntersectionObserver pauses the loop when the hero scrolls off-screen
-- Source file: `assets/hf_20260623_235035_*.mp4` (4K Kling image-to-video render,
-  in the project-root `assets/` folder, keep for re-encodes)
-- Superseded scrub-era files (`hero-scrub-hd.mp4`, `hero-scrub.mp4`, and older
-  `hf_2026061*` renders) are now unused and safe to delete
-- `assets/og-image.jpg` (1200×630) is the social share image, generated from a
-  video still — referenced by og:image, twitter:image, and JSON-LD in `index.html`
+## Hero
+- Full-bleed immersive hero in `index.html`: the phoenix is a **background-removed
+  cut-out image** floating on the section's grey gradient (#B1B4BB → #C6C9CF →
+  #D9D9E0). Because the emblem has no studio "box", the translucent glass wings
+  show the page grey through them and it reads as fully integrated (no rectangle)
+- Headline + CTAs sit in the lower third (`.hero-content`) over the emblem, with a
+  soft light pool (`.hero-content::before`) + a gentle vignette/bottom-scrim
+  (`.hero-vignette`) so the dark text stays legible where it overlaps the phoenix
+- Cut-out asset: `assets/phoenix-cutout.webp` (1600px, ~320KB, alpha) with
+  `assets/phoenix-cutout.png` (1200px) as `<picture>` fallback. Idle `heroFloat`
+  CSS animation gives it a slow vertical drift; load-in = `heroZoomSettle` +
+  staggered `heroReveal`/`fadeUp` (prefers-reduced-motion guarded)
+- Cursor glow: `.hero-glow` div (radial amber, `mix-blend-mode: screen`) tracks the
+  pointer across the whole hero — JS (`initHeroVideo`) sets `--gx`/`--gy` and toggles
+  `.is-active`; skipped on `pointer: coarse`
+- The cut-out was matted from a 4K frame with `rembg` (isnet-general-use +
+  alpha-matting). Source render: `assets/hf_20260623_235035_*.mp4` (4K Kling
+  image-to-video, project-root `assets/`, keep for re-mattes/re-encodes)
+- Superseded & now-unused: the `hero-phoenix*.mp4` loop encodes + poster (from the
+  video-hero iteration) and the older scrub-era `hero-scrub*.mp4` / `hf_2026061*`
+  files — all safe to delete
+- `assets/og-image.jpg` (1200×630) is the social share image, generated from an
+  old video still — referenced by og:image, twitter:image, and JSON-LD in
+  `index.html` (worth regenerating from a phoenix-cutout still)
 - The old `frames/` directory (169 pre-rendered JPGs for the canvas animation)
   was removed in June 2026 when the video hero replaced it
 
