@@ -373,8 +373,9 @@
     }
 
     .hero-video-container {
+      position: relative;
       width: 100%;
-      max-width: 840px;
+      max-width: 900px;
       aspect-ratio: 1920 / 1072;
       overflow: hidden;
       /* wide feather: the outer half of the frame fades gradually into the
@@ -391,18 +392,21 @@
       transform: translateZ(0);
     }
 
-    .hero-scrub-hint {
+    /* cursor-tracked amber bloom; screen blend lights up the dark phoenix metal
+       where the cursor passes but barely registers over the light grey backdrop */
+    .hero-glow {
       position: absolute;
-      bottom: 28px;
-      right: 48px;
-      z-index: 1;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(19,20,23,0.38);
-      animation: fadeUp 0.8s ease 1.6s both;
-      white-space: nowrap;
+      inset: 0;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      background: radial-gradient(ellipse 24% 38% at var(--gx, 50%) var(--gy, 50%),
+        rgba(255,150,45,0.62) 0%,
+        rgba(255,120,30,0.26) 38%,
+        rgba(255,120,30,0) 64%);
     }
+    .hero-video-container:hover .hero-glow { opacity: 1; }
 
     @media (max-width: 1023px) {
       .hero-split {
@@ -415,7 +419,6 @@
       .hero-actions { justify-content: center; }
       .hero-visual { order: -1; }
       .hero-video-container { max-width: 100%; }
-      .hero-scrub-hint { display: none; }
     }
 
     @media (max-width: 480px) {
@@ -720,13 +723,14 @@
       </div>
       <div class="hero-visual">
         <div class="hero-video-container">
-          <video id="heroVideo" muted playsinline preload="auto"
-                 data-src-desktop="assets/hero-scrub-hd.mp4"
-                 data-src-mobile="assets/hero-scrub.mp4"></video>
+          <video id="heroVideo" muted loop autoplay playsinline preload="auto"
+                 poster="assets/hero-phoenix-poster.jpg"
+                 data-src-desktop="assets/hero-phoenix-hd.mp4"
+                 data-src-mobile="assets/hero-phoenix.mp4"></video>
+          <div class="hero-glow"></div>
         </div>
       </div>
     </div>
-    <div class="hero-scrub-hint">Move your cursor to explore</div>
   </section>
 
   <!-- SPECS -->
@@ -867,80 +871,44 @@
       }, startDelay);
     }
 
-    // ─── HERO VIDEO SCRUB ───
+    // ─── HERO PHOENIX: autoplay idle loop + cursor-tracked amber glow ───
     function initHeroVideo() {
       var video = document.getElementById('heroVideo');
       if (!video) return;
 
-      var targetTime = 0;
       var isMobile = window.innerWidth < 1024;
 
-      // 1928px all-keyframe file for desktop scrubbing (4K decodes too slowly
-      // to seek 60x/sec); lighter 1280px encode for mobile autoplay
+      // Passive loop now (no scrubbing), so normal-GOP encodes; 1920px desktop,
+      // lighter 1280px on mobile
       video.src = isMobile
-        ? (video.dataset.srcMobile || 'assets/hero-scrub.mp4')
-        : (video.dataset.srcDesktop || 'assets/hero-scrub-hd.mp4');
+        ? (video.dataset.srcMobile || 'assets/hero-phoenix.mp4')
+        : (video.dataset.srcDesktop || 'assets/hero-phoenix-hd.mp4');
+      video.muted = true;
+      video.loop = true;
+      video.autoplay = true;
       video.load();
+      video.play().catch(function () {});
 
-      if (isMobile) {
-        // Mobile: standard looping autoplay
-        video.autoplay = true;
-        video.loop = true;
-        video.muted = true;
-        video.play().catch(function () {});
-        return;
-      }
-
-      var rafId = null;
-      var heroVisible = true;
-
-      function lerp(a, b, t) { return a + (b - a) * t; }
-
-      function rafLoop() {
-        if (video.duration && Math.abs(video.currentTime - targetTime) > 0.015) {
-          var next = lerp(video.currentTime, targetTime, 0.14);
-          try {
-            if (video.fastSeek) { video.fastSeek(next); }
-            else { video.currentTime = next; }
-          } catch (e) {}
-        }
-        rafId = requestAnimationFrame(rafLoop);
-      }
-
-      function startLoop() {
-        if (rafId === null) rafId = requestAnimationFrame(rafLoop);
-      }
-      function stopLoop() {
-        if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
-      }
-
-      function onMouseMove(e) {
-        if (!heroVisible || !video.duration) return;
-        // Absolute mapping: screen-left = first frame, screen-right = last frame
-        var ratio = Math.max(0, Math.min(1, e.clientX / window.innerWidth));
-        targetTime = ratio * (video.duration - 0.05);
-      }
-
-      video.addEventListener('loadedmetadata', function () {
-        video.currentTime = 0.001; // paint the first frame
-        if (heroVisible) startLoop();
-      });
-
-      // Only seek while the hero is on screen, so scrolling the rest of the
-      // page never pays the video-decode cost
+      // Pause the loop when the hero scrolls off-screen to save decode cost
       var hero = document.getElementById('hero');
       if ('IntersectionObserver' in window && hero) {
         new IntersectionObserver(function (entries) {
-          heroVisible = entries[0].isIntersecting;
-          if (heroVisible && video.readyState >= 1) startLoop();
-          else if (!heroVisible) stopLoop();
+          if (entries[0].isIntersecting) video.play().catch(function () {});
+          else video.pause();
         }, { threshold: 0.05 }).observe(hero);
       }
 
-      window.addEventListener('mousemove', onMouseMove);
-
-      window.addEventListener('beforeunload', function () {
-        stopLoop();
+      // Cursor-tracked amber bloom over the emblem (desktop pointer only)
+      if (isMobile) return;
+      var container = video.closest('.hero-video-container');
+      var glow = container && container.querySelector('.hero-glow');
+      if (!container || !glow) return;
+      container.addEventListener('pointermove', function (e) {
+        var r = container.getBoundingClientRect();
+        var x = ((e.clientX - r.left) / r.width) * 100;
+        var y = ((e.clientY - r.top) / r.height) * 100;
+        glow.style.setProperty('--gx', x.toFixed(1) + '%');
+        glow.style.setProperty('--gy', y.toFixed(1) + '%');
       });
     }
 

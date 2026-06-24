@@ -32,15 +32,22 @@ an EHR/ERP implementation consultancy serving NJ, NY, and Trinidad & Tobago.
 Fonts: Space Grotesk (headings), Archivo (body), JetBrains Mono (mono)
 
 ## Hero Video
-- Full-bleed cursor-scrubbed hero in `index.html`; section bg gradient matches
-  the video's studio backdrop (#B2B6BD → #D9DADE) so the model blends into the page
-- Two encodes, both all-keyframe (`-g 1`) for instant seeking, derived from the
-  4K source render: `assets/hero-scrub-hd.mp4` (1920px, desktop scrub) and
-  `assets/hero-scrub.mp4` (1280px, mobile autoplay loop) — selected by JS via data attrs
-- Do NOT serve 4K directly: all-intra 4K decode can't keep up with 60/sec seeks
-- Scrub loop is gated by an IntersectionObserver — no decode cost off-hero
-- Source file: `assets/hf_20260611_025101_*.mp4` (4K render, keep for re-encodes;
-  the older `hf_20260610_*` file is the previous render)
+- Two-column split hero in `index.html` (text left, phoenix right); section bg
+  gradient (#B1B4BB → #C6C9CF → #D9D9E0) is sampled from the render's studio
+  backdrop so the emblem dissolves into the page via a radial feather mask
+- The phoenix is a **passive autoplay loop** (no scrubbing) with a baked-in idle:
+  slow float + amber energy-strip "breathing" pulse. On top of the video, a
+  cursor-tracked `.hero-glow` div (radial amber gradient, `mix-blend-mode: screen`)
+  follows the pointer over the emblem — JS sets `--gx`/`--gy`, CSS `:hover` fades it in
+- Two encodes, normal-GOP (passive loop, no seeking → small files), from the 4K
+  source: `assets/hero-phoenix-hd.mp4` (1920px desktop, ~930KB) and
+  `assets/hero-phoenix.mp4` (1280px mobile, ~410KB) — selected by JS via data attrs.
+  Poster: `assets/hero-phoenix-poster.jpg` (first frame)
+- IntersectionObserver pauses the loop when the hero scrolls off-screen
+- Source file: `assets/hf_20260623_235035_*.mp4` (4K Kling image-to-video render,
+  in the project-root `assets/` folder, keep for re-encodes)
+- Superseded scrub-era files (`hero-scrub-hd.mp4`, `hero-scrub.mp4`, and older
+  `hf_2026061*` renders) are now unused and safe to delete
 - `assets/og-image.jpg` (1200×630) is the social share image, generated from a
   video still — referenced by og:image, twitter:image, and JSON-LD in `index.html`
 - The old `frames/` directory (169 pre-rendered JPGs for the canvas animation)
